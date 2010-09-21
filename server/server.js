@@ -3,15 +3,16 @@ var http = require('http'),
 		fs = require('fs'),
 		io = require('socket.io'),
 		sys = require('sys'),
-    sm = require('./socketmanager');
+    sm = require('./socketmanager'),
+    servers = [];
 		
-send404 = function(res){
+var send404 = function(res){
 	res.writeHead(404);
 	res.write('404');
 	res.end();
-},
-		
-server = http.createServer(function(req, res){
+};
+
+servers[0] = http.createServer(function(req, res){
 	var path = url.parse(req.url).pathname;
 	switch (path){
 		case '/':
@@ -19,30 +20,20 @@ server = http.createServer(function(req, res){
 			res.write('<h1>Welcome to Chat Everywhare.</h1><p>Install the client <a href="/client.crx">chat</a> (Chrome Only).</p>');
 			res.end();
 			break;
-			
 		default:
-// 			if (/\.(js|html|swf)$/.test(path)){
-// 				try {
-// 					var swf = path.substr(-4) === '.swf';
-// 					res.writeHead(200, {'Content-Type': swf ? 'application/x-shockwave-flash' : ('text/' + (path.substr(-3) === '.js' ? 'javascript' : 'html'))});
-// 					fs.readFile(__dirname + path, swf ? 'binary' : 'utf8', function(err, data){
-// 						if (!err) res.write(data, swf ? 'binary' : 'utf8');
-// 						res.end();
-// 					});
-// 				} catch(e){ 
-// 					send404(res); 
-// 				}
-// 				break;
-// 			}
-		
 			send404(res);
 			break;
 	}
-});
+}).listen(80);
 
-server.listen(8080);
-		
-var io = io.listen(server),
+
+servers[1] = http.createServer(function(req, res){
+	res.writeHead(200, {'Content-Type': 'text/plain'});
+	res.end('');
+});
+servers[1].listen(8080);
+
+var io = io.listen(servers[1]),
 		channels = {},
 		users = {};
 
