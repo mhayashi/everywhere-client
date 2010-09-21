@@ -1,0 +1,149 @@
+body {
+/*    font: 11px Arial, Helvetica, sans-serif;
+	background: #ffffff url(images/main-bg.gif);
+	padding: 0;
+	margin: 0;*/
+}
+
+/* dock - top */
+.dock {
+	position: relative; 
+	height: 50px; 
+	text-align: center;
+}
+.dock-container {
+	position: absolute;
+	height: 50px;
+	background: url(images/dock-bg2.gif);
+	padding-left: 20px;
+}
+a.dock-item {
+	display: block;
+	width: 40px;
+	color: #000;
+	position: absolute;
+	top: 0px;
+	text-align: center;
+	text-decoration: none;
+	font: bold 12px Arial, Helvetica, sans-serif;
+}
+.dock-item img {
+	border: none; 
+	margin: 5px 10px 0px; 
+	width: 100%; 
+}
+.dock-item span {
+	display: none; 
+	padding-left: 20px;
+}
+
+/* dock2 - bottom */
+#dock2 {
+	position:fixed !important;
+    /*
+	bottom:0px !important;
+	left:0px !important;
+	right:0px !important;
+	height:0px !important;
+	background:rgba(0,255,0,0) !important;
+	border-top   :12px solid rgba(0, 255, 0, 0.01) !important;
+	border-bottom: 1px solid rgba(0, 255, 0,    1) !important;
+	-webkit-transition:all 0.3s ease-in-out;
+	transition:all 0.3s ease-in-out;*/
+	width: 100%;
+	bottom: 0px;
+	position: absolute;
+	left: 0px;
+}
+.dock-container2 {
+    background: rgba(0,0,0,0.2);
+    z-index:10000;
+/*	color:rgba(0,0,0,0.5) !important;
+	z-index:10000 !important;*/
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    
+	position: absolute;
+    bottom: 0px;
+	height: 25px;
+	padding-left: 20px;
+}
+a.dock-item2 {
+	display: block;
+	width: 40px; 
+	bottom: 0px;
+	position: absolute;
+	text-align: center;
+	text-decoration: none !important;
+}
+.dock-item2 span {
+	display: none;
+	padding-left: 20px;
+}
+.dock-item2 img {
+	border: none; 
+	margin: 5px 10px 0px; 
+	width: 100%; 
+}
+/* .message { */
+/*     width: 200px; */
+/*     height: 100px; */
+/*     -webkit-border-top-left-radius: 6px; */
+/*     -webkit-border-top-right-radius: 6px; */
+/*     -webkit-border-bottom-left-radius: 6px; */
+/*     -webkit-border-bottom-right-radius: 6px; */
+/* /\* 	transition:all 0.3s ease-in-out; *\/ */
+/*     bottom: 40px; */
+/* } */
+.reply {
+    color: #0000ff !important;
+}
+
+/* .qtip-title { */
+/*     font: 'bold 15px Arial, Helvetica, sans-serif' */
+/* } */
+
+/* .qtip-button { */
+/*     float: right !important; */
+/*     position: relative !important; */
+/*     cursor: pointer !important; */
+/*     font: 'bold 15px Arial, Helvetica, sans-serif' !important; */
+/*     color: 'blue' !important; */
+/* } */
+
+/* .qtip-button2 { */
+/*     float: right !important; */
+/*     position: relative !important; */
+/*     cursor: pointer !important; */
+/*     font: 'bold 15px Arial, Helvetica, sans-serif' !important; */
+/*     color: 'blue' !important; */
+/* } */
+
+
+.ui-tooltip-light {
+    width: 200px;
+    font: 15px Helvetica, Arial, sans-serif !important;
+}
+
+.ui-tooltip-title {
+    font: bold 15px Helvetica, Arial, sans-serif !important;
+}
+
+.ui-tooltip-button {
+/*     float: right; */
+/*     position: relative; */
+    text-align: right;
+    font: bold 15px Helvetica, Arial, sans-serif !important;
+    cursor: pointer;
+    color: blue;
+}
+/*       name: 'light', */
+/*       width: 200, */
+/*       padding: 2, */
+/*       background: 'white', */
+/*       color: 'black', */
+/*       font: '15px Arial, Helvetica, sans-serif', */
+/*       textAlign: 'left', */
+/*       border: { width: 1, radius: 2, color: 'silver' }, */
+/*       tip: { corner: 'bottomRight' } */
+/*     }, */

@@ -1,11 +1,11 @@
 {
-  "name": "Chromed Bird",
-  "version": "1.8.5",
+  "name": "Chat Everywhere",
+  "version": "0.0.1",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "browser_action": {
     "default_icon": "img/icon19.png",
-    "default_title": "Chromed Bird",
+    "default_title": "Everywhere",
     "popup": "popup.html"
   },
   "background_page": "background.html",
@@ -21,6 +21,12 @@
     "48": "img/icon48.png"
   },
   "content_scripts": [
+    {
+      "matches": ["http://*/*" , "https://*/*"],
+      "css": ["css/jquery.qtip.css", "css/dock.css"],
+      "js": ["lib/3rdparty/jquery.js", "lib/3rdparty/interface.js", "lib/3rdparty/fisheye_patched.js", "lib/3rdparty/jquery.qtip.min.js", "lib/utils.js", "lib/dock.js", "lib/oauth_authorizer.js"],
+      "run_at": "document_end"
+    },
     {
       "matches": ["http://twitter.com/oauth/authorize", "https://twitter.com/oauth/authorize"],
       "js": ["lib/3rdparty/jquery.js", "lib/oauth_authorizer.js"]

@@ -4,6 +4,7 @@
 <script type="text/javascript" src="lib/3rdparty/jquery.js"></script>
 <script type="text/javascript" src="lib/3rdparty/oauth.js"></script>
 <script type="text/javascript" src="lib/3rdparty/sha1.js"></script>
+<script type="text/javascript" src="lib/3rdparty/socket.io.js"></script>
 
 <script type="text/javascript" src="lib/math_utils.js"></script>
 <script type="text/javascript" src="lib/persistence.js"></script>
@@ -25,7 +26,9 @@
 <script type="text/javascript" src="lib/timelines/search_timeline.js"></script>
 
 <script type="text/javascript" src="lib/send_queue.js"></script>
-<script>
+<script type="text/javascript">
+var development = true;
+
 function initializeJQueryOptions() {
   $.ajaxSetup({
     timeout: OptionsBackend.get('request_timeout')
@@ -62,7 +65,8 @@ function TweetManager() {
   this.listsCache = null;
   this.listsTabCount = OptionsBackend.get('lists_count');
 
-  this.suspend = false;
+  //this.suspend = false;
+  this.suspend = true;
 
   this.timelineOrderData = Persistence.timelineOrder();
   this.oauthTokenData = Persistence.oauthTokenData();
@@ -114,6 +118,7 @@ function TweetManager() {
         timeline.init();
       }, true);
       _this.retrieveFollowingUsers();
+      _this.getMyInfo();
     },
     function(remainingHits, nextHitsReset, hourlyLimit) {
       _this.onHitsUpdated.call(_this, remainingHits, nextHitsReset, hourlyLimit);
@@ -851,6 +856,38 @@ TweetManager.prototype = {
     });
   },
 
+  showUser: function(username) {
+    var _this = this;
+    this.twitterBackend.showUser(function(success, user) {
+      if(!success) {
+        // Try again in a while...
+        setTimeout(function() {
+          _this.showUser(username);
+        }, 10000);
+        return;
+      }
+      console.log(user);
+      chrome.extension.sendRequest({user:user});
+    }, username);
+  },
+
+  getMyInfo: function() {
+    var username = this.twitterBackend.username();
+    var _this = this;
+    this.twitterBackend.showUser(function(success, user) {
+      if(!success) {
+        // Try again in a while...
+        setTimeout(function() {
+          _this.showUser(username);
+        }, 10000);
+        return;
+      }
+      myInfo = user;
+      console.log('getMyInfo');
+      console.log(myInfo);
+    }, username);
+  },
+  
   getUsersToComplete: function() {
     return this.followingUsers;
   }
@@ -993,6 +1030,111 @@ $.ajax({
   }
 });
 
+//io.setPath('/client/');
+var socket;
+connectToServer();
+
+function connectToServer() {
+  var host = development ? 'localhost' : 'everywhere.fam.cx';
+  socket = new io.Socket(host, {port: 8080});
+  //console.log('connecting...');
+  socket.connect();
+  socket.on('message', function(msg) {
+    var obj =  JSON.parse(msg);
+    updateDock(obj);
+  });
+}
+
+//   function countup(){
+//     id++;
+//     $('#text').val('');
+//   };
+
+var dumpObj = function(o) {
+  var str = "";
+  for (var i in o) {
+    console.log(i + ": "+ o[i]);
+  }
+}
+
+var myInfo = null;
+
+// chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+//   console.log('sender');
+//   console.log(sender);
+//   if (request.user) {
+//     me = request.user;
+//   }
+// });
+
+function updateDock(obj) {
+  console.log(obj);
+  chrome.tabs.getSelected(null, function(tab) {
+    chrome.tabs.sendRequest(tab.id, obj);
+  });
+}
+
+function sendToServer(msgType, url, message){
+  var username = TweetManager.instance.twitterBackend.username();
+//   if (me == null) {
+//     //var users = TweetManager.instance.lookupUsers([username]);
+//     //var users = TweetManager.instance.retrieveUsersData([username]);
+//     //TweetManager.instance.showUser(username);
+//     TweetManager.instance.getMyInfo(username);
+//   }
+  //socket.send({username: username, msgType:status, message:'hello', url:url});
+  //socket.send(); // <-- SyntaxError: Unexpected end of input
+  //socket.send({"a":"a"}); // <-- SyntaxError: Unexpected token ILLEGAL
+  socket.send({msgType: msgType,
+               url: url,
+               username: username,
+               message: message,
+               image_url: myInfo['profile_image_url']});
+};
+
+// remove parameter from url
+//function removeParams(url, parameter) {
+function removeParams(url) {
+  var urlparts = url.split('#');
+  if (urlparts.length>=2) {
+    url = urlparts[0];
+  }
+//   urlparts = url.split('?');
+//   if (urlparts.length>=2) {
+//     /*
+//     var prefix = encodeURIComponent(parameter) + '=';
+//     var pars= urlparts[1].split(/[&;]/g);
+//     for (var i = pars.length; i-->0;)
+//       if (pars[i].lastIndexOf(prefix, 0) !== -1)
+//         pars.splice(i, 1);
+//     url = urlparts[0]+'?'+pars.join('&');
+//     */
+//     url = urlparts[0];
+//   }
+  return url;
+};
+
+var exemptURLs = [
+  /http:\/\/www\.google\..*/,
+  /http:\/\/mail\.google\.com.*/,
+  /http:\/\/www\.twitter\.com$/
+];
+
+function checkURL(url) {
+  if (url.match(/http:\/\/*\/*/) || url.match(/https:\/\/*\/*/)) {
+    var len = exemptURLs.length;
+    for (var i = 0; i < len; i++) {
+      if (url.match(exemptURLs[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+  return false;
+}
+
+var visitingPages = {};
+
 function initializeExtension() {
   TweetManager.instance = new TweetManager();
 
@@ -1041,6 +1183,50 @@ function initializeExtension() {
         selectedResponse = sendResponse;
       }
       return;
+    }
+  });
+
+  // send 'join' message to the server when a tab is opened
+  chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if (socket.connected == false) {
+      connectToServer();
+    }
+    if (changeInfo.status == 'complete') {
+      var url = removeParams(tab.url);
+      if (visitingPages[tabId] != url) {
+        // if you visit a new page
+        if (checkURL(url)) {
+          visitingPages[tabId] = url;
+          sendToServer('join', url, 'Hello!');
+        }
+      } else {
+        // if you just reload the page
+        sendToServer('rejoin', url, '');
+      }
+    }
+  });
+    
+  chrome.tabs.onRemoved.addListener(function(tabId) {
+    // send logout message to server
+    if (visitingPages[tabId]) {
+      sendToServer('exit', visitingPages[tabId], 'bye');
+      delete visitingPages[tabId];
+    }
+    // test code
+    //var username = TweetManager.instance.twitterBackend.username();
+    //message({'message':{msgType:'exit', url:visitingPages[tabId], username: username, message:"bye!",}});
+  });
+
+  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    if (request.msgType) {
+      sendToServer(request.msgType, removeParams(request.url), request.message);
+    }
+  });
+  
+  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    if (request.getUsername) {
+      //console.log(myInfo['screen_name']);
+      sendResponse(myInfo['screen_name']);
     }
   });
 }

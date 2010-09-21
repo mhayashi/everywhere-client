@@ -243,8 +243,15 @@ TwitterLib.prototype = {
       user_id: usersIdList.join(',')
     };
     this.ajaxRequest('users/lookup', callback, null, params, "GET");
-  }
+  },
 
+  showUser: function(callback, screen_name) {
+    var params = {
+      screen_name: screen_name
+    };
+    this.ajaxRequest('users/show', callback, null, params, "GET");
+  }
+  
 };
 
 var globalOAuthInstance;
@@ -287,11 +294,11 @@ function TwitterOAuth(microbloggingService, oauthTokenData, onAuthenticated) {
   this.microbloggingService = microbloggingService;
 
   if(microbloggingService == 'twitter') {
-    this.consumerSecret = 'MsuvABdvwSn2ezvdQzN4uiRR44JK8jESTIJ1hrhe0U';
-    this.consumerKey    = 'KkrTiBu0hEMJ9dqS3YCxw';
+    this.consumerSecret = '6lkYrQxFq97WoNDmJJ9tERpbOivcqh2TwoP7MgQ4s';
+    this.consumerKey    = 'xWAQrU28R21ZHif5wT2w';
   } else if(microbloggingService == 'identica') {
-    this.consumerSecret = '5160eba9484e97fa164acd7fd5aa9b83';
-    this.consumerKey    = '4f7780c1329c67a3d69c84c11a4edf9d';
+    this.consumerSecret = '';
+    this.consumerKey    = '';
   }
 
   globalOAuthInstance = this;

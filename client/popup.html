@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="css/tipsy.css" />
 <link rel="stylesheet" type="text/css" href="css/jquery.contextMenu.css" />
 
-<script>
+<script type="text/javascript">
 var MAX_TWEET_SIZE = 140;
 var Persistence = chrome.extension.getBackgroundPage().Persistence;
 var urlExpander = chrome.extension.getBackgroundPage().urlExpander;
@@ -50,7 +50,7 @@ if(!twitterBackend.authenticated() && !twitterBackend.tokenRequested()) {
 <!--script type="text/javascript" src="lib/debug.js"></script-->
 <script type="text/javascript" src="lib/shortener_lib.js"></script>
 <script type="text/javascript" src="lib/simple_select.js"></script>
-<script>
+<script type="text/javascript">
 $.ajaxSetup({
   timeout: OptionsBackend.get('request_timeout')
 });
@@ -1749,21 +1749,21 @@ $(function() {
     </div>
   </div>
 
-  <div id="compose_tweet_area" style="display: none;">
-    <textarea rows="4" onkeyup="Composer.textareaChanged(event);" onblur="Composer.textareaChanged();"></textarea>
-    <div id="shortener_area">
-      <input type="text" name="shortener_text" onfocus="Shortener.focus();" onkeyup="Shortener.changed(event);" onblur="Shortener.blur();">
-      <div id="shorten_current" title="Share current page" onclick="Shortener.shortenCurrentPage();"></div>
-      <div id="shortener_button" onclick="Shortener.shortenIt();"><div><span id="shortenIt" class="i18n"></span></div></div>
-    </div>
-    <div class="footer">
-      <input id="tweetit" class="i18n" type="button" onclick="Composer.sendTweet();"/>
-      <span class="chars_left"></span>
-    </div>
-  </div>
-  <div id="compose_tweet" onclick="Composer.showComposeArea()">
-    <img class="left" src="img/arrow_down.gif"/><span id="composeTweet" class="i18n"></span><img class="right" src="img/arrow_down.gif"/>
-  </div>
+<!--   <div id="compose_tweet_area" style="display: none;"> -->
+<!--     <textarea rows="4" onkeyup="Composer.textareaChanged(event);" onblur="Composer.textareaChanged();"></textarea> -->
+<!--     <div id="shortener_area"> -->
+<!--       <input type="text" name="shortener_text" onfocus="Shortener.focus();" onkeyup="Shortener.changed(event);" onblur="Shortener.blur();"> -->
+<!--       <div id="shorten_current" title="Share current page" onclick="Shortener.shortenCurrentPage();"></div> -->
+<!--       <div id="shortener_button" onclick="Shortener.shortenIt();"><div><span id="shortenIt" class="i18n"></span></div></div> -->
+<!--     </div> -->
+<!--     <div class="footer"> -->
+<!--       <input id="tweetit" class="i18n" type="button" onclick="Composer.sendTweet();"/> -->
+<!--       <span class="chars_left"></span> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div id="compose_tweet" onclick="Composer.showComposeArea()"> -->
+<!--     <img class="left" src="img/arrow_down.gif"/><span id="composeTweet" class="i18n"></span><img class="right" src="img/arrow_down.gif"/> -->
+<!--   </div> -->
 
   <span class="header_link_left">
     <a href="javascript:signout()"><span id="logout" class="i18n"></span></a> |
@@ -1777,11 +1777,11 @@ $(function() {
   <img src="img/loading.gif" id="queue_loading" style="display: none;"/>
   <div style="clear: both;"></div>
 
-  <div id="update_tweets" onclick="loadNewTweets();"></div>
+<!--   <div id="update_tweets" onclick="loadNewTweets();"></div> -->
 
-  <div id="tabs">
-    <ul></ul>
-  </div>
+<!--   <div id="tabs"> -->
+<!--     <ul></ul> -->
+<!--   </div> -->
 
 </div>
 
@@ -1796,11 +1796,11 @@ $(function() {
 <div id="error_pin" style="display: none;">
 </div>
 
-<ul id="tab_context_menu" class="contextMenu">
-</ul>
-<div id="popup_footer">
-  <span id="twitter_hits_left"></span>
-  <span id="twitter_hits_reset"></span>
-</div>
+<!-- <ul id="tab_context_menu" class="contextMenu"> -->
+<!-- </ul> -->
+<!-- <div id="popup_footer"> -->
+<!--   <span id="twitter_hits_left"></span> -->
+<!--   <span id="twitter_hits_reset"></span> -->
+<!-- </div> -->
 </body>
 </html>
