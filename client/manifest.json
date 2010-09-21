@@ -26,16 +26,8 @@
       "css": ["css/jquery.qtip.css", "css/dock.css"],
       "js": ["lib/3rdparty/jquery.js", "lib/3rdparty/interface.js", "lib/3rdparty/fisheye_patched.js", "lib/3rdparty/jquery.qtip.min.js", "lib/utils.js", "lib/dock.js", "lib/oauth_authorizer.js"],
       "run_at": "document_end"
-    },
-    {
-      "matches": ["http://twitter.com/oauth/authorize", "https://twitter.com/oauth/authorize"],
-      "js": ["lib/3rdparty/jquery.js", "lib/oauth_authorizer.js"]
-    },
-    {
-      "matches": ["http://identi.ca/api/oauth/authorize", "https://identi.ca/api/oauth/authorize"],
-      "js": ["lib/3rdparty/jquery.js", "lib/oauth_identica_authorizer.js"]
     }
-  ],
-  "options_page": "options.html",
-  "update_url": "http://clients2.google.com/service/update2/crx"
+  ]
+//   "options_page": "options.html",
+//   "update_url": "http://clients2.google.com/service/update2/crx"
 }
