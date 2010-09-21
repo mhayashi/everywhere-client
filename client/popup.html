@@ -43,7 +43,7 @@ if(!twitterBackend.authenticated() && !twitterBackend.tokenRequested()) {
 <script type="text/javascript" src="lib/3rdparty/jquery.js"></script>
 <script type="text/javascript" src="lib/3rdparty/jquery-ui-custom.js"></script>
 <script type="text/javascript" src="lib/3rdparty/jquery.autocomplete.mod.js"></script>
-<script type='text/javascript' src='lib/3rdparty/jquery.tipsy.js'></script>
+<script type="text/javascript" src="lib/3rdparty/jquery.tipsy.js"></script>
 <script type="text/javascript" src="lib/3rdparty/jquery.contextMenu.js"></script>
 <script type="text/javascript" src="lib/3rdparty/jquery.insertatcaret.min.js"></script>
 
@@ -1788,9 +1788,9 @@ $(function() {
 <div id="enter_pin" style="display: none;">
   <img src="img/loading.gif" id="loading_oauth" style="display: none;"/>
   <label for="pin">Twitter's OAuth Pin:</label>
-  <input type="text" name="pin"><br>
-  <input type="button" onclick="OAuth.registerPin();" class="i18n" id="btnAuthorize" value="Authorize!">
-  <br><br>
+  <input type="text" name="pin" /><br />
+  <input type="button" onclick="OAuth.registerPin();" class="i18n" id="btnAuthorize" value="Authorize!" />
+  <br /><br />
   <a href="javascript:OAuth.requestNewToken();"><span id="newToken" class="i18n"></span></a>
 </div>
 <div id="error_pin" style="display: none;">
