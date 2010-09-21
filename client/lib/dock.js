@@ -13,7 +13,12 @@ $('#qtipManager').bind('sendMessage', sendMessage);
 $('#qtipManager').bind('hideTip', hideTip);
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-  console.log(request);
+  if (request.disconnected) {
+    $('.dock-container2').css('background', 'rgba(255,0,0,0.2)');
+  } else {
+    $('.dock-container2').css('background', 'rgba(0,0,0,0.2)');
+  }
+  
   var msgType = request.msgType;
   if (msgType == 'buffer') {
     var len = request.message.length;

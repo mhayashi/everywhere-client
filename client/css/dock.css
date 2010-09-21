@@ -14,7 +14,7 @@ body {
 .dock-container {
 	position: absolute;
 	height: 50px;
-	background: url(images/dock-bg2.gif);
+/* 	background: url(images/dock-bg2.gif); */
 	padding-left: 20px;
 }
 a.dock-item {

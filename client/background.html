@@ -1044,11 +1044,6 @@ function connectToServer() {
   });
 }
 
-//   function countup(){
-//     id++;
-//     $('#text').val('');
-//   };
-
 var dumpObj = function(o) {
   var str = "";
   for (var i in o) {
@@ -1188,6 +1183,12 @@ function initializeExtension() {
   // send 'join' message to the server when a tab is opened
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if (socket.connected == false) {
+      // tell all tabs the server is disconnected.
+      chrome.tabs.getAllInWindow(null, function(tabs) {
+        for (var i in tabs) {
+          chrome.tabs.sendRequest(tabs[i].id, {disconnected: true});
+        }
+      });
       connectToServer();
     }
     if (changeInfo.status == 'complete') {
