@@ -883,8 +883,10 @@ TweetManager.prototype = {
         return;
       }
       myInfo = user;
-      console.log('getMyInfo');
-      console.log(myInfo);
+      if (development) {
+        console.log('getMyInfo');
+        console.log(myInfo);
+      }
     }, username);
   },
   
@@ -1194,19 +1196,25 @@ function initializeExtension() {
         }
       });
       connectToServer();
-    }
-    if (changeInfo.status == 'complete') {
-      var url = removeParams(tab.url);
-      if (visitingPages[tabId] != url) {
-        // if you visit a new page
-        if (checkURL(url)) {
-          visitingPages[tabId] = url;
-          sendToServer('join', url, 'Hello!');
-        }
+    } else {
+      if (!myInfo) {
+        // TODO: need callback when getMyInfo is succeeded
+        TweetManager.instance.getMyInfo();
       } else {
-        // if you just reload the page
-        sendToServer('rejoin', url, '');
-      }
+        if (changeInfo.status == 'complete') {
+          var url = removeParams(tab.url);
+          if (visitingPages[tabId] != url) {
+            // if you visit a new page
+            if (checkURL(url)) {
+              visitingPages[tabId] = url;
+              sendToServer('join', url, 'Hi!');
+            }
+          } else {
+            // if you just reload the page
+            sendToServer('rejoin', url, '');
+          }
+        }
+      }        
     }
   });
     
