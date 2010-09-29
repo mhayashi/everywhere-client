@@ -94,14 +94,17 @@ SocketManager.prototype.connectToChannel = function(client, channelId){
 };
     
 SocketManager.prototype.exitFromChannel = function(client, channelId){
-    var index = 0;
     if (this.channels[channelId]){
-        index = this.channels[channelId].indexOf(client.sessionId);
-        this.channels[channelId].remove(index);
+        var clientId = this.channels[channelId].indexOf(client.sessionId);
+        if (clientId != -1) {
+            this.channels[channelId].remove(clientId);
+        }
     }
     if (client.channels){
-        index = client.channels.indexOf(channelId);
-		    client.channels.remove(index);
+        var channelIndex = client.channels.indexOf(channelId);
+        if (channelIndex != -1) {
+            client.channels.remove(channelIndex);
+        }
     }
 };
     

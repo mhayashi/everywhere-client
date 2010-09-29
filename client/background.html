@@ -1037,7 +1037,7 @@ connectToServer();
 
 function connectToServer() {
   var host = development ? 'localhost' : 'everywhere.fam.cx';
-  socket = new io.Socket(host, {port: 8080});
+  socket = new io.Socket(host, {port: 8000});
   //console.log('connecting...');
   socket.connect();
   socket.on('message', function(msg) {
@@ -1069,6 +1069,7 @@ function updateDock(obj) {
     for (var i in tabs) {
       if (tabs[i].url == obj.message.url) {
         chrome.tabs.sendRequest(tabs[i].id, obj);
+        break;
       }
     }
   });
@@ -1204,13 +1205,13 @@ function initializeExtension() {
         if (changeInfo.status == 'complete') {
           var url = removeParams(tab.url);
           if (visitingPages[tabId] != url) {
-            // if you visit a new page
+            // if a user visit a new page
             if (checkURL(url)) {
               visitingPages[tabId] = url;
               sendToServer('join', url, 'Hi!');
             }
           } else {
-            // if you just reload the page
+            // if a user just reload the page
             sendToServer('rejoin', url, '');
           }
         }
