@@ -1115,7 +1115,7 @@ var exemptURLs = [
 ];
 
 function checkURL(url) {
-  if (url.match(/http:\/\/*\/*/) || url.match(/https:\/\/*\/*/)) {
+  if (url.match(/http:\/\/*\/*/)) {
     var len = exemptURLs.length;
     for (var i = 0; i < len; i++) {
       if (url.match(exemptURLs[i])) {
