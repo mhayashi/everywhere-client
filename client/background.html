@@ -1062,9 +1062,13 @@ var myInfo = null;
 // });
 
 function updateDock(obj) {
-  console.log(obj);
-  chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.sendRequest(tab.id, obj);
+  if (development) console.log(obj);
+  chrome.tabs.getAllInWindow(null, function(tabs) {
+    for (var i in tabs) {
+      if (tabs[i].url == obj.message.url) {
+        chrome.tabs.sendRequest(tabs[i].id, obj);
+      }
+    }
   });
 }
 
