@@ -5,17 +5,40 @@ body {
 	margin: 0;*/
 }
 
+#menu-button {
+    z-index: 20000;
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    bottom: 0px;
+    right: 0px;
+    background: rgba(34, 37, 42, 0.8);
+    color: #ffffff;
+    cursor: hand;
+    text-align: center;
+	font: bold 16px Arial, Helvetica, sans-serif;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+}
+
+#counter {
+    width: 30px;
+    height: 30px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
 /* dock - top */
 .dock {
-	position: relative; 
-	height: 50px; 
+    height: 0px;
 	text-align: center;
 }
 .dock-container {
-	position: absolute;
-	height: 50px;
-/* 	background: url(images/dock-bg2.gif); */
-	padding-left: 20px;
+	/* position: absolute; */
+	/* height: 50px; */
+	/* padding-left: 20px; */
 }
 a.dock-item {
 	display: block;
@@ -23,18 +46,18 @@ a.dock-item {
 	color: #000;
 	position: absolute;
 	top: 0px;
-	text-align: center;
-	text-decoration: none;
-	font: bold 12px Arial, Helvetica, sans-serif;
+	text-align: center !important;
+	text-decoration: none !important;
+	font: bold 12px Arial, Helvetica, sans-serif !important;
 }
 .dock-item img {
 	border: none; 
-	margin: 5px 10px 0px; 
+	/* margin: 5px 10px 0px;  */
 	width: 100%; 
 }
 .dock-item span {
 	display: none; 
-	padding-left: 20px;
+	/* padding-left: 20px; */
 }
 
 /* dock2 - bottom */
@@ -50,27 +73,24 @@ a.dock-item {
 	border-bottom: 1px solid rgba(0, 255, 0,    1) !important;
 	-webkit-transition:all 0.3s ease-in-out;
 	transition:all 0.3s ease-in-out;*/
-	width: 100%;
+	/* width: 100%; */
 	bottom: 0px;
-	position: absolute;
-	left: 0px;
+	/* position: absolute; */
+	right: 30px;
 }
 .dock-container2 {
-    background: rgba(0,0,0,0.2);
-    z-index:10000;
-/*	color:rgba(0,0,0,0.5) !important;
-	z-index:10000 !important;*/
-    -webkit-border-top-left-radius: 6px;
-    -webkit-border-top-right-radius: 6px;
-    
-	position: absolute;
+    z-index: 10000;
+    background: rgba(255,0,0,0.2);
     bottom: 0px;
-	height: 25px;
-	padding-left: 20px;
+	height: 30px;
+	/* padding-left: 20px; */
+	/* margin-right: 0px; */
+    position: absolute;
+    /* padding-right: 0px; */
 }
 a.dock-item2 {
-	display: block;
-	width: 40px; 
+ 	display: block;
+	width: 40px;
 	bottom: 0px;
 	position: absolute;
 	text-align: center;
@@ -78,11 +98,15 @@ a.dock-item2 {
 }
 .dock-item2 span {
 	display: none;
-	padding-left: 20px;
+	/* padding-left: 20px; */
 }
 .dock-item2 img {
 	border: none; 
-	margin: 5px 10px 0px; 
+	/* margin: 5px 10px 0px;  */
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
 	width: 100%; 
 }
 /* .message { */
@@ -147,3 +171,36 @@ a.dock-item2 {
 /*       border: { width: 1, radius: 2, color: 'silver' }, */
 /*       tip: { corner: 'bottomRight' } */
 /*     }, */
+
+#ui-tooltip-log {
+    width: 200px;
+}
+
+div.log {
+    overflow: scroll;
+}
+
+.log-message {
+    boader-color: #ffffff;
+    boader-bottom-style: dotted;
+    padding: 2px;
+    /* max-height: 300px; */
+}
+
+.log-user-image {
+    padding: 1px;
+}
+
+.log-user-image img {
+    float: left;
+    padding-right: 2px;
+}
+
+.log-username {
+    font-weight: bold;
+    padding: 1px;
+}
+
+.log-text {
+    padding: 1px;
+}

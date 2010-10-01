@@ -1,18 +1,38 @@
-var qtips = {};
-var preQtips = {};
-var currentTip;
-var username;
-var users = [];
+var development = true,
+    logTip,
+    qtips = {},
+    preQtips = {},
+    currentTip,
+    username,
+    menuVisible = false,
+    users = [];
 
+$('<div id="menu-button"></div>').appendTo('body');
+$('<div id="counter"></div>').appendTo('#menu-button');
 $('<div class="dock" id="dock2"></div>').appendTo('body');
 $('<div class="dock-container2"></div>').appendTo('#dock2');
-
+$('#dock2').css({bottom: '-60px'});
+$('#menu-button').click(function() {
+  if (menuVisible) {
+    // Animation doesn't work... so I set 0 temporally.
+    $('#dock2').animate({ bottom: '-60px' }, 0);
+    logTip.hide();
+  } else {
+    $('#dock2').animate({ bottom: '0px' }, 0);
+    logTip.show();
+  }
+  menuVisible = !menuVisible;
+});
 $('<div id="qtipManager" style="display:none"></div>').appendTo('body');
 $('#qtipManager').bind('showMessageTip', showMessageTip);
 $('#qtipManager').bind('sendMessage', sendMessage);
 $('#qtipManager').bind('hideTip', hideTip);
 
+
+
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+  if (development) console.log(request);
+  
   if (request.disconnected) {
     $('.dock-container2').css('background', 'rgba(255,0,0,0.2)');
   } else {
@@ -20,17 +40,26 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
   }
   
   var msgType = request.msgType;
-  if (msgType == 'buffer') {
-    var len = request.message.length;
-    for (var i = 0; i < len; i++) {
-      console.log(request.message[i]);
-      joinToDock(request.message[i]);
+  if (msgType == 'log') {
+    //console.log(JSON.parse(request.message.log));
+    var log = request.message.log;
+    if (log) {
+      for (var i = 0, len = log.length; i < len; i++) {
+        if (development) console.log(log[i]);
+      }
     }
-  } else if (msgType == 'join') {
+    createLogTip(log);
+    for (var i = 0, len = request.message.users; i < len; i++) {
+      console.log(request.message.users[i]);
+      joinToDock(request.message.users[i]);
+    }
+  } else if (msgType == 'join' || msgType == 'rejoin') {
     if ($('#' + request.message.username).size() == 0) {
       joinToDock(request.message);
     }
   } else if (msgType == 'update') {
+    logTip.elements.content.append(makeMessage(request.message));
+    logTip.show();
     updateTip(request.message.username, esc(request.message.message));
   } else if (msgType == 'exit') {
     exitFromDock(request);
@@ -62,10 +91,13 @@ function joinToDock(message) {
   }
   updateDock();
 
-  createTip(_username, esc(message.message)).show();
+  createTip(_username, "Joined.").show();
+  
+  $('#menu-button #counter').text(users.length);
 }
 
 function updateDock() {
+  $('#dock2').css('width', 30*users.length);
   $('#dock2').Fisheye({
 	  maxWidth: 48,
 	  items: '.dock-item2',
@@ -95,7 +127,7 @@ function createTip(_username, message) {
     },
     position: { my: 'bottom right', at: 'top left', adjust: { x: 20, y: 5 } },
     style: { classes: 'ui-tooltip-light' },
-    show: { event: 'mouseenter', delay: 0 },
+    show: { event: 'mouseenter', delay: 0, solo: true },
     hide: { event: 'unfocus', delay: 0, inactive: 5000 }
   }).qtip();
 }
@@ -111,6 +143,42 @@ function updateTip(_username, message) {
     qt = createTip(_username, message);
   }
   qt.show();
+
+  //$('#ui-tooltip-log').find('.ui-tooltip-content').append(makeMessage(message));
+}
+
+function createLogTip(log) {
+  var text = "";
+  if (log) {
+    var divlog = $('<div class="log"></div>');
+    for (var i = 0, len = log.length; i < len; i++) {
+      divlog.append(makeMessage(log[i]));
+      text = divlog.html();
+    }
+  } else {
+    text = "No Messages";
+  }
+  logTip = $('#menu-button').qtip({
+    id: 'log',
+    content: { text: text, title: { text: 'Messages' } },
+    show: false,
+    hide: false,
+    position: { my: 'bottom right', at: 'top left', target: $('#menu-button'), adjust: { x: 30, y: -5 } },
+    style: {
+      classes: 'ui-tooltip-cluetip',
+      width: 200,
+      height: 300,
+      tip: { corner: 'bottom right' }
+    }
+  }).qtip();
+}
+
+function makeMessage(message) {
+  var divmessage = $('<div class="log-message"></div>');
+  divmessage.append('<div class="log-user-image"><img src="'+message.image_url+'" height="30px" width="30px" /></div>');
+  divmessage.append('<div class="log-username"><a href="http://twitter.com/'+message.username+'">'+message.username+'</a></div>');
+  divmessage.append('<div class="log-text">'+message.message+'</div>');
+  return divmessage;
 }
 
 function saveCurrentTip(target) {
