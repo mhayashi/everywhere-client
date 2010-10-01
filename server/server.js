@@ -13,27 +13,79 @@ var send404 = function(res){
 	res.end();
 };
 
-var development = 1;
+var development = 0;
 
 if (!development) {
+  console.log('server start');
   servers[0] = http.createServer(function(req, res){
 	  var path = url.parse(req.url).pathname;
 	  switch (path){
 	   case '/':
-			res.writeHead(200, {'Content-Type': 'text/html'});
-			res.write('<h1>Welcome to Chat Everywhare.</h1><p>Install the client <a href="/client.crx">chat</a> (Chrome Only).</p>');
-			res.end();
+		  fs.readFile(__dirname + '/index.html', function(err, data){
+			  if (err) return send404(res);
+			  res.writeHead(200, {'Content-Type': 'text/html'});
+			  res.write(data);
+			  res.end();
+      });
 			break;
+	   // case '/about':
+		 //  fs.readFile(__dirname + '/about.html', function(err, data){
+		 //    if (err) return send404(res);
+		 //    res.writeHead(200, {'Content-Type': 'text/html'});
+		 //    res.write(data);
+		 //    res.end();
+     //  });
+		 //  break;
+	   // case '/contact':
+		 //  fs.readFile(__dirname + '/contact.html', function(err, data){
+		 //    if (err) return send404(res);
+		 //    res.writeHead(200, {'Content-Type': 'text/html'});
+		 //    res.write(data);
+		 //    res.end();
+     //  });
+		 //  break;
 	   case '/client.crx':
 		  fs.readFile(__dirname + path, function(err, data){
 			  if (err) return send404(res);
-			  res.writeHead(200, {'Content-Type': 'text/html'});
-			  res.write(data, 'utf8');
+			  res.writeHead(200, {'Content-Type': 'application/crx'});
+			  res.write(data);
 			  res.end();
 		  });
       break;
 	  default:
-		  send404(res);
+      if (/\.(js)$/.test(path)){
+		    fs.readFile(__dirname + path, function(err, data){
+			    res.writeHead(200, {'Content-Type': 'text/javascript'});
+          res.write(data);
+          res.end();
+        });
+      } else if (/\.(css)$/.test(path)) {
+		    fs.readFile(__dirname + path, function(err, data){
+          res.writeHead(200, {'Content-Type': 'text/css'});
+          res.write(data);
+          res.end();
+        });
+      } else if (/\.(jpg)$/.test(path)) {
+		    fs.readFile(__dirname + path, function(err, data){
+          res.writeHead(200, {'Content-Type': 'image/css'});
+          res.write(data);
+          res.end();
+        });
+      } else if (/\.(png)$/.test(path)) {
+		    fs.readFile(__dirname + path, function(err, data){
+          res.writeHead(200, {'Content-Type': 'image/png'});
+          res.write(data);
+          res.end();
+        });
+      } else if (/\.(eot|woff|otf)$/.test(path)) {
+		    fs.readFile(__dirname + path, function(err, data){
+          res.writeHead(200);
+          res.write(data);
+          res.end();
+        });
+      } else {
+        return send404(res);
+      }
 		  break;
 	  }
   }).listen(80);
@@ -102,6 +154,7 @@ sm.on('join', function(client, message){
 });
 
 sm.on('rejoin', function(client, message){
+  sm.send('rejoin', client.sessionId, {message: message});
   sendLog(client, message);
 });
 
