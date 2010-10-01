@@ -82,7 +82,7 @@ input[type='text'] {
 
 #workspace {
   margin: 0px 4px 0px 4px;
-  min-width: 440px;
+  min-width: 200px;
 }
 
 .header_link_left {
