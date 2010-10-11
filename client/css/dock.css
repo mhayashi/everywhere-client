@@ -1,206 +1,235 @@
-body {
-/*    font: 11px Arial, Helvetica, sans-serif;
-	background: #ffffff url(images/main-bg.gif);
-	padding: 0;
-	margin: 0;*/
+/* menu  */
+
+#everywhere-menu-button {
+    z-index: 30000 !important;
+    position: fixed !important;
+    width: 30px !important;
+    height: 30px !important;
+    bottom: 0px !important;
+    right: 0px !important;
+    background: rgba(34, 37, 42, 0.8) !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    text-align: center !important;
+	font: bold 16px Arial, Helvetica, sans-serif !important;
+    -webkit-border-radius: 4px !important;
 }
 
-#menu-button {
-    z-index: 20000;
-    position: fixed;
-    width: 30px;
-    height: 30px;
-    bottom: 0px;
-    right: 0px;
-    background: rgba(34, 37, 42, 0.8);
-    color: #ffffff;
-    cursor: hand;
-    text-align: center;
-	font: bold 16px Arial, Helvetica, sans-serif;
-    -webkit-border-top-left-radius: 3px;
-    -webkit-border-top-right-radius: 3px;
-    -webkit-border-bottom-left-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
+#everywhere-menu-counter {
+    width: 30px !important;
+    height: 30px !important;
+    display: table-cell !important;
+    vertical-align: middle !important;
 }
 
-#counter {
-    width: 30px;
-    height: 30px;
-    display: table-cell;
-    vertical-align: middle;
-}
+/* dock */
 
-/* dock - top */
-.dock {
-    height: 0px;
-	text-align: center;
-}
-.dock-container {
-	/* position: absolute; */
-	/* height: 50px; */
-	/* padding-left: 20px; */
-}
-a.dock-item {
-	display: block;
-	width: 40px;
-	color: #000;
-	position: absolute;
-	top: 0px;
-	text-align: center !important;
-	text-decoration: none !important;
-	font: bold 12px Arial, Helvetica, sans-serif !important;
-}
-.dock-item img {
-	border: none; 
-	/* margin: 5px 10px 0px;  */
-	width: 100%; 
-}
-.dock-item span {
-	display: none; 
-	/* padding-left: 20px; */
-}
-
-/* dock2 - bottom */
-#dock2 {
+#everywhere-dock {
+    height: 30px !important;
 	position:fixed !important;
-    /*
-	bottom:0px !important;
-	left:0px !important;
-	right:0px !important;
-	height:0px !important;
-	background:rgba(0,255,0,0) !important;
-	border-top   :12px solid rgba(0, 255, 0, 0.01) !important;
-	border-bottom: 1px solid rgba(0, 255, 0,    1) !important;
-	-webkit-transition:all 0.3s ease-in-out;
-	transition:all 0.3s ease-in-out;*/
-	/* width: 100%; */
-	bottom: 0px;
-	/* position: absolute; */
-	right: 30px;
-}
-.dock-container2 {
-    z-index: 10000;
-    background: rgba(255,0,0,0.2);
-    bottom: 0px;
-	height: 30px;
-	/* padding-left: 20px; */
-	/* margin-right: 0px; */
-    position: absolute;
-    /* padding-right: 0px; */
-}
-a.dock-item2 {
- 	display: block;
-	width: 40px;
-	bottom: 0px;
-	position: absolute;
-	text-align: center;
-	text-decoration: none !important;
-}
-.dock-item2 span {
-	display: none;
-	/* padding-left: 20px; */
-}
-.dock-item2 img {
-	border: none; 
-	/* margin: 5px 10px 0px;  */
-    -webkit-border-top-left-radius: 4px;
-    -webkit-border-top-right-radius: 4px;
-    -webkit-border-bottom-left-radius: 4px;
-    -webkit-border-bottom-right-radius: 4px;
-	width: 100%; 
-}
-/* .message { */
-/*     width: 200px; */
-/*     height: 100px; */
-/*     -webkit-border-top-left-radius: 6px; */
-/*     -webkit-border-top-right-radius: 6px; */
-/*     -webkit-border-bottom-left-radius: 6px; */
-/*     -webkit-border-bottom-right-radius: 6px; */
-/* /\* 	transition:all 0.3s ease-in-out; *\/ */
-/*     bottom: 40px; */
-/* } */
-.reply {
-    color: #0000ff !important;
+	right: 30px !important;
 }
 
-/* .qtip-title { */
-/*     font: 'bold 15px Arial, Helvetica, sans-serif' */
-/* } */
-
-/* .qtip-button { */
-/*     float: right !important; */
-/*     position: relative !important; */
-/*     cursor: pointer !important; */
-/*     font: 'bold 15px Arial, Helvetica, sans-serif' !important; */
-/*     color: 'blue' !important; */
-/* } */
-
-/* .qtip-button2 { */
-/*     float: right !important; */
-/*     position: relative !important; */
-/*     cursor: pointer !important; */
-/*     font: 'bold 15px Arial, Helvetica, sans-serif' !important; */
-/*     color: 'blue' !important; */
-/* } */
-
-
-.ui-tooltip-light {
-    width: 200px;
-    font: 15px Helvetica, Arial, sans-serif !important;
+.everywhere-dock-container {
+    z-index: 30000 !important;
+	height: 30px !important;
+    position: absolute !important;
+    bottom: 0px !important;
+	right: 30px !important;
 }
 
-.ui-tooltip-title {
-    font: bold 15px Helvetica, Arial, sans-serif !important;
+a.everywhere-dock-item {
+	display: block !important;
+	width: 30px !important;
+    position: absolute !important;
+	font: bold 12px Arial, Helvetica, sans-serif !important;
+	color: #000 !important;
 }
 
-.ui-tooltip-button {
-/*     float: right; */
-/*     position: relative; */
-    text-align: right;
-    font: bold 15px Helvetica, Arial, sans-serif !important;
-    cursor: pointer;
-    color: blue;
-}
-/*       name: 'light', */
-/*       width: 200, */
-/*       padding: 2, */
-/*       background: 'white', */
-/*       color: 'black', */
-/*       font: '15px Arial, Helvetica, sans-serif', */
-/*       textAlign: 'left', */
-/*       border: { width: 1, radius: 2, color: 'silver' }, */
-/*       tip: { corner: 'bottomRight' } */
-/*     }, */
-
-#ui-tooltip-log {
-    width: 200px;
+a.everywhere-dock-item img {
+	width: 100% !important; 
+	border: none !important; 
+    -webkit-border-radius: 4px !important;
+    /* -webkit-border-top-left-radius: 4px !important; */
+    /* -webkit-border-top-right-radius: 4px !important; */
+    /* -webkit-border-bottom-left-radius: 4px !important; */
+    /* -webkit-border-bottom-right-radius: 4px !important; */
 }
 
-div.log {
-    overflow: scroll;
+
+/* qTip */
+
+div[id^="ui-tooltip-everywhere-"] {
+    font: normal 12px Arial, Helvetica, sans-serif !important;
+    text-align: left !important;
+    padding: 1px !important;
+    /* position: fixed !important; */
+    background: rgba(34, 37, 42, 0.9) !important;
+    -webkit-border-radius: 5px !important;
 }
 
-.log-message {
-    boader-color: #ffffff;
-    boader-bottom-style: dotted;
-    padding: 2px;
-    /* max-height: 300px; */
+div[id^="ui-tooltip-everywhere-"] .ui-tooltip-wrapper {
+    background: transparent !important;
+    color: #e3e3e3 !important;
+    position: relative !important;
 }
 
-.log-user-image {
-    padding: 1px;
+div[id^="ui-tooltip-everywhere-"] .ui-tooltip-titlebar {
+    background: rgba(30, 33, 38, 0.9) !important;
+    color: #e3e3e3 !important;
+    position: relative !important;
+    -webkit-border-radius: 5px !important;
 }
 
-.log-user-image img {
-    float: left;
-    padding-right: 2px;
+div[id^="ui-tooltip-everywhere-"] .ui-tooltip-tip {
+    font: normal 12px Arial, Helvetica, sans-serif !important;
 }
 
-.log-username {
-    font-weight: bold;
-    padding: 1px;
+div[id^="ui-tooltip-everywhere-"] .ui-tooltip-content {
+    background: transparent !important;
+    color: #e3e3e3 !important;
+    position: relative !important;
 }
 
-.log-text {
-    padding: 1px;
+.everywhere-qtip-log .everywhere-qtip-message div {
+    margin: 2px;
+}
+
+div[id^="ui-tooltip-everywhere-"] a {
+    font-weight: bold !important;
+    color: #B7CA54 !important;
+    text-decoration: none !important;
+}
+
+div[id^="ui-tooltip-everywhere-user-"] {
+    width: 220px !important;
+}
+
+#ui-tooltip-everywhere-temp {
+    width: 200px !important;
+}
+
+#ui-tooltip-everywhere-log {
+    margin: 5px !important;
+    width: 220px !important;
+}
+
+#ui-tooltip-everywhere-log-title {
+    background: transparent !important;
+    font: bold 15px Arial, Helvatica, sans-serif !important;
+    padding: 0px !important;
+    position: relative !important;
+    display: table-cell !important;
+    vertical-align: middle !important;
+}
+
+#ui-tooltip-everywhere-log-content {
+}
+
+.everywhere-qtip-log {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    max-height: 300px !important;
+}
+
+.everywhere-qtip-message {
+}
+
+.everywhere-qtip-log-message {
+    boader-color: #ffffff !important;
+    boader-bottom-style: dotted !important;
+    padding: 2px !important;
+    margin-bottom: 3px !important;
+}
+
+.everywhere-qtip-user-image img {
+    -webkit-border-radius: 4px !important;
+    float: left !important;
+    margin: 0px 8px 0px 0px !important;
+}
+
+.everywhere-qtip-log-text {
+    clear: both !important;
+}
+
+.everywhere-qtip-date {
+    color: #B0C4DE !important;
+}
+
+.everywhere-qtip-location {
+}
+
+.everywhere-qtip-realname {
+}
+
+#ui-tooltip-everywhere-log-content textarea {
+    background: transparent !important;
+    font: normal 12px Arial, Helvetica, sans-serif !important;
+    color: #e3e3e3 !important;
+    margin: 8px !important;
+	padding: 0px !important;
+    width: 200px !important;
+    border: 1 solid #ccc !important;
+    overflow: auto;
+	-webkit-box-shadow: 0px 0px 0px (255, 255, 255, 0.0) !important;
+	-moz-box-shadow: 0px 0px 0px  (255, 255, 255, 0.0) !important;
+	box-shadow: 0px 0px 0px rgba(255, 255, 255, 0.0) !important;
+}
+
+#ui-tooltip-everywhere-log-content textarea:hover {
+    font: normal 12px Arial, Helvetica, sans-serif !important;
+	background: transparent !important;
+    border: 1px solid #ccc !important;
+	text-shadow: 0px 0px 0 #eae7e7 !important;
+}
+
+ #ui-tooltip-everywhere-log-content textarea:focus {
+    font: normal 12px Arial, Helvetica, sans-serif !important;
+	background: transparent !important;
+    border: 1 solid #ccc !important;
+	text-shadow: 0px 0px 0 #eae7e7 !important;
+}
+ 
+.everywhere-string-counter {
+    font: bold 15px Arial, Helvetica, sans-serif !important;
+    width: 100px !important;
+    padding: 5px 10px 6px !important;
+    float: left !important;
+    display: table-cell !important;
+    vertical-align: middle !important;
+}
+
+.everywhere-send-button {
+    float: right !important;
+    align: right !important;
+}
+
+.everywhere-button {
+    background: #222 !important;
+    margin: 8px !important;
+    display: inline-block !important;
+    padding: 5px 10px 6px !important;
+    font: bold 12px Arial, Helvetica, sans-serif !important;
+    color: #e3e3e3 !important;
+    text-decoration: none !important;
+    line-height: 1 !important;
+    -webkit-border-radius: 5px !important;
+    -webkit-box-shadow: 0px 0px 0px #999 !important;
+    /* text-shadow: 0 -1px 1px #222 !important; */
+    /* border-bottom: 1px solid #222 !important; */
+    border: 1px solid #ccc !important;
+    position: relative !important;
+    cursor: pointer !important;
+}
+
+.everywhere-button:focus .everywhere-button:hover {
+    -webkit-box-shadow: 1px 1px 1px #91b2d2 !important;
+}
+
+
+#everywhere-log-send-button {
+    
+}
+
+#everywhere-user-reply-button {
 }

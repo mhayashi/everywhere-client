@@ -13,6 +13,7 @@
 <script type="text/javascript" src="lib/expander_lib.js"></script>
 
 <script type="text/javascript" src="lib/options_backend.js"></script>
+<script type="text/javascript" src="lib/shortener_lib.js"></script>
 
 <script type="text/javascript" src="lib/timeline_factory.js"></script>
 <script type="text/javascript" src="lib/timeline_template.js"></script>
@@ -28,6 +29,24 @@
 <script type="text/javascript" src="lib/send_queue.js"></script>
 <script type="text/javascript">
 var development = true;
+
+var url_shortener = OptionsBackend.get('url_shortener');
+var shortener_acct = OptionsBackend.get('shortener_acct');
+var shortener_login = null;
+var shortener_key = null;
+if(shortener_acct) {
+  shortener_login = OptionsBackend.get('shortener_login');
+  shortener_key = OptionsBackend.get('shortener_key');
+}
+
+if (url_shortener == 'yourls'){
+  shortener_key = OptionsBackend.get('yourls_key');
+}
+
+var reply_all = OptionsBackend.get('reply_all');
+var shortener = new Shortener(url_shortener, shortener_acct, 
+			                        shortener_login, shortener_key, 
+			                        OptionsBackend.get('shortener_service_url'));
 
 function initializeJQueryOptions() {
   $.ajaxSetup({
@@ -366,7 +385,7 @@ TweetManager.prototype = {
     }, true);
     var totalUnreadNewCount = this.unique(totalUnreadNewIds).length;
     if(colors.length == 0) {
-      chrome.browserAction.setTitle({title: "Chromed Bird"});
+      chrome.browserAction.setTitle({title: "everywhere!"});
       chrome.browserAction.setIcon({imageData: IconCreator.paintIcon(this.iconImg, OptionsBackend.get('idle_color'))});
       chrome.browserAction.setBadgeText({text: ''});
     } else {
@@ -1069,28 +1088,32 @@ function updateDock(obj) {
     for (var i in tabs) {
       if (tabs[i].url == obj.message.url) {
         chrome.tabs.sendRequest(tabs[i].id, obj);
-        break;
+        // do not break
+        // a user might open a same webpage in multiple tabs
       }
     }
   });
 }
 
-function sendToServer(msgType, url, message){
-  var username = TweetManager.instance.twitterBackend.username();
-//   if (me == null) {
-//     //var users = TweetManager.instance.lookupUsers([username]);
-//     //var users = TweetManager.instance.retrieveUsersData([username]);
-//     //TweetManager.instance.showUser(username);
-//     TweetManager.instance.getMyInfo(username);
-//   }
-  //socket.send({username: username, msgType:status, message:'hello', url:url});
-  //socket.send(); // <-- SyntaxError: Unexpected end of input
-  //socket.send({"a":"a"}); // <-- SyntaxError: Unexpected token ILLEGAL
+function sendMessage(msgType, url, message){
+  var shortURL = shortURLs[url] || "";
   socket.send({msgType: msgType,
                url: url,
-               username: username,
+               shortURL: shortURL,
+               username: myInfo['screen_name'] || "",
+               // realname: myInfo['name'] || "",
+               // location: myInfo['location'] || "",
+               date: new Date().toString(),
                message: message,
                image_url: myInfo['profile_image_url']});
+  if (msgType == 'update') {
+    if (shortURL) {
+      var tweet = message + " " + shortURL;
+      TweetManager.instance.enqueueTweet(tweet);
+    } else {
+      TweetManager.instance.enqueueTweet(message);
+    }
+  }
 };
 
 // remove parameter from url
@@ -1129,12 +1152,16 @@ function checkURL(url) {
         return false;
       }
     }
-    return true;
+    return url;
   }
   return false;
 }
 
-var visitingPages = {};
+var shortURLs = {};
+
+function validateURL(url) {
+  return checkURL(removeParams(url));
+}
 
 function initializeExtension() {
   TweetManager.instance = new TweetManager();
@@ -1196,23 +1223,17 @@ function initializeExtension() {
           chrome.tabs.sendRequest(tabs[i].id, {disconnected: true});
         }
       });
+      // TODO: enable to pass callback
       connectToServer();
     } else {
       if (!myInfo) {
-        // TODO: need callback when getMyInfo is succeeded
+        // TODO: enable to pass callback
         TweetManager.instance.getMyInfo();
       } else {
         if (changeInfo.status == 'complete') {
-          var url = removeParams(tab.url);
-          if (visitingPages[tabId] != url) {
-            // if a user visit a new page
-            if (checkURL(url)) {
-              visitingPages[tabId] = url;
-              sendToServer('join', url, 'Hi!');
-            }
-          } else {
-            // if a user just reload the page
-            sendToServer('rejoin', url, '');
+          var vurl = checkURL(removeParams(tab.url));
+          if (vurl) {
+            sendMessage('join', vurl, '');
           }
         }
       }        
@@ -1221,25 +1242,29 @@ function initializeExtension() {
     
   chrome.tabs.onRemoved.addListener(function(tabId) {
     // send logout message to server
-    if (visitingPages[tabId]) {
-      sendToServer('exit', visitingPages[tabId], 'bye');
-      delete visitingPages[tabId];
-    }
+    var tab = chrome.tabs.get(tabId);
+    sendMessage('exit', validateURL(tab.url), 'bye');
     // test code
     //var username = TweetManager.instance.twitterBackend.username();
     //message({'message':{msgType:'exit', url:visitingPages[tabId], username: username, message:"bye!",}});
   });
 
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    if (request.msgType) {
-      sendToServer(request.msgType, removeParams(request.url), request.message);
-    }
-  });
-  
-  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
     if (request.getUsername) {
       //console.log(myInfo['screen_name']);
       sendResponse(myInfo['screen_name']);
+    } else if (request.msgType) {
+      var vurl = validateURL(request.url);
+      if (vurl) {
+        if (!shortURLs[vurl]) {
+          shortener.shorten(vurl, function(success, shortUrl) {
+            shortURLs[vurl] = shortUrl;
+            sendMessage(request.msgType, vurl, request.message);
+          });
+        } else {
+          sendMessage(request.msgType, vurl, request.message);
+        }
+      }
     }
   });
 }
