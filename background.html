@@ -127,7 +127,6 @@ function TweetManager() {
 
   this.initIconAndAlerts();
 
-  var _this = this;
   this.twitterBackend = new TwitterLib(
     function onAuthenticated() {
       TimelineTemplate.initAfterAuthentication();
@@ -149,8 +148,7 @@ function TweetManager() {
     OptionsBackend.get('base_signing_url'),
     OptionsBackend.get('base_oauth_signing_url'),
     OptionsBackend.get('base_search_url'),
-    this.oauthTokenData
-  );
+    this.oauthTokenData);
 
   this.sendQueue = new SendQueue(this.twitterBackend);
 }
@@ -295,9 +293,9 @@ TweetManager.prototype = {
 
   /* Lists timelines won't be included as they'll only be shown later */
   orderedEachTimeline: function(callback, includeLists) {
-    var retList = [];
-    for(var tId in this.timelines) {
-      var timeline = this.timelines[tId];
+    var retList = [], tId, timeline;
+    for(tId in this.timelines) {
+      timeline = this.timelines[tId];
       if(!includeLists && timeline.template.id == TimelineTemplate.LISTS) {
         continue;
       }
@@ -312,9 +310,9 @@ TweetManager.prototype = {
       }
     }
     for(var i = 0; i < retList.length; ++i) {
-      var tId = retList[i];
+      tId = retList[i];
       if(tId) {
-        var timeline = this.timelines[tId];
+        timeline = this.timelines[tId];
         if(timeline.template.visible) {
           var ret = callback.call(tId, timeline);
           if(ret === false) {
@@ -385,8 +383,8 @@ TweetManager.prototype = {
       }
     }, true);
     var totalUnreadNewCount = this.unique(totalUnreadNewIds).length;
-    if(colors.length == 0) {
-      chrome.browserAction.setTitle({title: "everywhere!"});
+    if(colors.length === 0) {
+      chrome.browserAction.setTitle({title: "Everywhere!"});
       chrome.browserAction.setIcon({imageData: IconCreator.paintIcon(this.iconImg, OptionsBackend.get('idle_color'))});
       chrome.browserAction.setBadgeText({text: ''});
     } else {
@@ -410,7 +408,7 @@ TweetManager.prototype = {
   },
 
   showTweetsNotifications: function(tweetsToNotify, forceOnPage) {
-    if(!tweetsToNotify || tweetsToNotify.length == 0) {
+    if(!tweetsToNotify || tweetsToNotify.length === 0) {
       return;
     }
     var maxTweetsNotifications = OptionsBackend.get('notification_max_popups');
@@ -449,8 +447,7 @@ TweetManager.prototype = {
 
         for(var i = 0; i < tweetsToNotify.length; ++i) {
           var notification = notificationCenter.createHTMLNotification(
-            chrome.extension.getURL('tweets_notifier.html')
-          );
+            chrome.extension.getURL('tweets_notifier.html'));
           (function inClosure(tweet) {
             notification.onclose = function(e) {
               setTimeout(function() {
@@ -499,7 +496,11 @@ TweetManager.prototype = {
       };
       injectHelper('script', 'lib/3rdparty/jquery.js', true, function() {
         injectHelper('css', 'css/injectedTweets.css', true, function() {
-          injectHelper('script', 'lib/tweets_assembler.js', true);
+          injectHelper('script', 'lib/tweet_transforms.js', true, function() {
+            injectHelper('script', 'lib/timeline_template.js', true, function() {
+              injectHelper('script', 'lib/tweets_assembler.js', true);
+            });
+          });
         });
       });
     }
@@ -554,6 +555,20 @@ TweetManager.prototype = {
       }
       callback(success, data, status);
     }, id);
+  },
+
+  getInReplyToTweet: function(callback, tweet) {
+    if(tweet.inReplyToTweet) {
+      callback(true, tweet.inReplyToTweet);
+      return;
+    }
+    var _this = this;
+    this.twitterBackend.showTweet(function(success, data, status) {
+      if(success) {
+        tweet.inReplyToTweet = data;
+      }
+      callback(success, data, status);
+    }, tweet.in_reply_to_status_id);
   },
 
   destroy: function(callback, tweetTimelineId, id) {
@@ -673,6 +688,7 @@ TweetManager.prototype = {
       return null;
     }
     timeline.changeList(listId);
+    return undefined;
   },
 
   getListId: function(timelineId) {
@@ -718,7 +734,7 @@ TweetManager.prototype = {
     var timeline = this.timelines[timelineId];
     if(!timeline) {
       callback([], timelineId);
-      return;
+      return undefined;
     }
     if(syncNew && timeline.template.includeInUnified) {
       var originalCallback = callback;
@@ -792,8 +808,8 @@ TweetManager.prototype = {
 
   onHitsUpdated: function(remainingHits, nextHitsReset, hourlyLimit) {
     var nextResetDate = new Date();
-    nextResetDate.setTime(parseInt(nextHitsReset) * 1000);
-    if(remainingHits == 0) {
+    nextResetDate.setTime(parseInt(nextHitsReset, 10) * 1000);
+    if(remainingHits === 0) {
       this.autoClearWarning = true;
       this.setWarning(chrome.i18n.getMessage("exceededAPIHits", [chrome.extension.getURL('options.html'), nextResetDate.toLocaleDateString(), nextResetDate.toLocaleTimeString()]));
       return;
@@ -810,7 +826,7 @@ TweetManager.prototype = {
       }
     }
 
-    this.apiHitsStates.push([(new Date()).getTime(), parseInt(remainingHits)]);
+    this.apiHitsStates.push([(new Date()).getTime(), parseInt(remainingHits, 10)]);
     if(this.apiHitsStates.length > this.maxApiHitsStates) {
       this.apiHitsStates.shift();
     }
@@ -913,7 +929,7 @@ TweetManager.prototype = {
   getUsersToComplete: function() {
     return this.followingUsers;
   }
-}
+};
 
 /* Clean up old versions mess */
 Persistence.cleanupOldData();
@@ -925,8 +941,8 @@ function compareVersions(v1, v2) {
   for(var i = 0; i < maxLen; ++i) {
     if(v1[i] === undefined) return -1;
     if(v2[i] === undefined) return 1;
-    if(parseInt(v1[i]) > parseInt(v2[i])) return 1;
-    if(parseInt(v1[i]) < parseInt(v2[i])) return -1;
+    if(parseInt(v1[i], 10) > parseInt(v2[i], 10)) return 1;
+    if(parseInt(v1[i], 10) < parseInt(v2[i], 10)) return -1;
   }
   return 0;
 }
@@ -936,6 +952,7 @@ function checkVersionChanges(manifest) {
     var currentVersion = manifest.version.split('.');
     var storageData = Persistence.version();
     var storageVersion = storageData.val();
+    var options, baseUrl;
     if(storageVersion) {
       storageVersion = JSON.parse(storageVersion);
     } else {
@@ -944,12 +961,12 @@ function checkVersionChanges(manifest) {
       return;
     }
 
-    if(compareVersions(currentVersion, storageVersion) != 0) {
+    if(compareVersions(currentVersion, storageVersion) !== 0) {
       // if last version is < 1.3.0
       if(compareVersions(storageVersion, [1, 3, 0]) < 0) {
         //Old default refresh interval, let's update it for the new version
         if(OptionsBackend.get('home_refresh_interval') == 60000) {
-          var options = OptionsBackend.load();
+          options = OptionsBackend.load();
           options['home_refresh_interval'] = OptionsBackend.defaultOptions['home_refresh_interval'];
           OptionsBackend.save(options);
         }
@@ -966,8 +983,8 @@ function checkVersionChanges(manifest) {
         timelineOrderData.save(JSON.stringify(storedOrder));
       }
       if(compareVersions(storageVersion, [1, 6, 1]) <= 0) {
-        var options = OptionsBackend.load();
-        var baseUrl = options['base_url'];
+        options = OptionsBackend.load();
+        baseUrl = options['base_url'];
         if(baseUrl.match(/http:\/\/twitter\.com/)) {
           options['base_url'] = 'http://api.twitter.com/1/';
           options['base_signing_url'] = 'http://api.twitter.com/1/';
@@ -1006,7 +1023,7 @@ function checkVersionChanges(manifest) {
           initializeJQueryOptions();
         }
 
-        var baseUrl = OptionsBackend.get('base_url');
+        baseUrl = OptionsBackend.get('base_url');
         var baseSigningUrl = OptionsBackend.get('base_signing_url');
         if(baseUrl == baseSigningUrl && baseUrl == 'http://api.twitter.com/1/') {
           // This days the SSL endpoint seems more reliable, let's make it the
@@ -1171,25 +1188,6 @@ function initializeExtension() {
   var selectedResponse = null;
   var biggestArea = -1;
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    if(request.cb_tweet_should_not_read) {
-      TweetManager.instance.shouldNotReadMap[request.tweet_id] = true;
-      return;
-    }
-    if(request.cb_requesting_tweets_immediate) {
-      var tweetToSend = null;
-      if(TweetManager.instance.injectTweets) {
-        tweetToSend = TweetManager.instance.injectTweets.shift();
-        if(TweetManager.instance.injectTweets.length == 0) {
-          TweetManager.instance.injectTweets = null;
-        }
-      }
-      sendResponse({
-        tweet: tweetToSend,
-        nameAttribute: OptionsBackend.get('name_attribute'),
-        fadeTimeout: OptionsBackend.get('notification_fade_timeout')
-      });
-      return;
-    }
     if(request.cb_requesting_tweets) {
       if(waitingFirstRequest) {
         waitingFirstRequest = false;
