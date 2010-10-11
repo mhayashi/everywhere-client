@@ -29,6 +29,7 @@
 <script type="text/javascript" src="lib/send_queue.js"></script>
 <script type="text/javascript">
 var development = true;
+var deploy = true;
 
 var url_shortener = OptionsBackend.get('url_shortener');
 var shortener_acct = OptionsBackend.get('shortener_acct');
@@ -1055,7 +1056,7 @@ var socket;
 connectToServer();
 
 function connectToServer() {
-  var host = development ? 'localhost' : 'everywhere.fam.cx';
+  var host = deploy ? 'everywhere.no.de' : 'localhost';
   socket = new io.Socket(host, {port: 8000});
   //console.log('connecting...');
   socket.connect();
