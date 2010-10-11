@@ -1,11 +1,11 @@
 {
-  "name": "Chat Everywhere",
+  "name": "everywhere!",
   "version": "0.0.1",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "browser_action": {
     "default_icon": "img/icon19.png",
-    "default_title": "Everywhere",
+    "default_title": "everywhere!",
     "popup": "popup.html"
   },
   "background_page": "background.html",
@@ -23,8 +23,8 @@
   "content_scripts": [
     {
       "matches": ["http://*/*" , "https://*/*"],
-      "css": ["css/jquery.qtip.css", "css/dock.css"],
-      "js": ["lib/3rdparty/jquery.js", "lib/3rdparty/interface.js", "lib/3rdparty/fisheye_patched.js", "lib/3rdparty/jquery.qtip.min.js", "lib/utils.js", "lib/dock.js", "lib/oauth_authorizer.js"],
+      "css": ["css/reset.css", "css/jquery.qtip.css", "css/dock.css"],
+      "js": ["lib/3rdparty/jquery.js", "lib/3rdparty/jquery.easing.1.3.js", "lib/3rdparty/jquery.qtip.min.js", "lib/utils.js", "lib/dock.js", "lib/oauth_authorizer.js"],
       "run_at": "document_end"
     }
   ]
