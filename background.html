@@ -1114,22 +1114,25 @@ function updateDock(obj) {
 }
 
 function sendMessage(msgType, url, message){
+  if (development) console.log(msgType+':'+url+':'+message);
   var shortURL = shortURLs[url] || "";
-  socket.send({msgType: msgType,
-               url: url,
-               shortURL: shortURL,
-               username: myInfo['screen_name'] || "",
-               // realname: myInfo['name'] || "",
-               // location: myInfo['location'] || "",
-               date: new Date().toString(),
-               message: message,
-               image_url: myInfo['profile_image_url']});
-  if (msgType == 'update') {
-    if (shortURL) {
-      var tweet = message + " " + shortURL;
-      TweetManager.instance.enqueueTweet(tweet);
-    } else {
-      TweetManager.instance.enqueueTweet(message);
+  if (socket.connected) {
+    socket.send(JSON.stringify({msgType: msgType,
+                 url: url,
+                 shortURL: shortURL,
+                 username: myInfo['screen_name'] || "",
+                 // realname: myInfo['name'] || "",
+                 // location: myInfo['location'] || "",
+                 date: new Date().toString(),
+                 message: message,
+                 image_url: myInfo['profile_image_url']}));
+    if (msgType == 'update') {
+      if (shortURL) {
+        var tweet = message + " " + shortURL;
+        TweetManager.instance.enqueueTweet(tweet);
+      } else {
+        TweetManager.instance.enqueueTweet(message);
+      }
     }
   }
 };
@@ -1164,8 +1167,7 @@ var exemptURLs = [
 
 function checkURL(url) {
   if (url.match(/http:\/\/*\/*/)) {
-    var len = exemptURLs.length;
-    for (var i = 0; i < len; i++) {
+    for (var i = 0, len = exemptURLs.length; i < len; i++) {
       if (url.match(exemptURLs[i])) {
         return false;
       }
@@ -1215,10 +1217,10 @@ function initializeExtension() {
 
   // send 'join' message to the server when a tab is opened
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    if (socket.connected == false) {
+    if (socket.connected === false) {
       // tell all tabs the server is disconnected.
       chrome.tabs.getAllInWindow(null, function(tabs) {
-        for (var i in tabs) {
+        for (var i = 0; i < tabs.length; i++) {
           chrome.tabs.sendRequest(tabs[i].id, {disconnected: true});
         }
       });
@@ -1227,25 +1229,38 @@ function initializeExtension() {
     } else {
       if (!myInfo) {
         // TODO: enable to pass callback
-        TweetManager.instance.getMyInfo();
+        if (TweetManager.instance.authenticated) {
+          TweetManager.instance.getMyInfo();
+        }
       } else {
-        if (changeInfo.status == 'complete') {
+        if (changeInfo.status === 'complete') {
           var vurl = checkURL(removeParams(tab.url));
           if (vurl) {
             sendMessage('join', vurl, '');
           }
         }
-      }        
+      }
     }
   });
     
   chrome.tabs.onRemoved.addListener(function(tabId) {
     // send logout message to server
-    var tab = chrome.tabs.get(tabId);
-    sendMessage('exit', validateURL(tab.url), 'bye');
-    // test code
-    //var username = TweetManager.instance.twitterBackend.username();
-    //message({'message':{msgType:'exit', url:visitingPages[tabId], username: username, message:"bye!",}});
+    if (socket.connected === false) {
+      // tell all tabs the server is disconnected.
+      chrome.tabs.getAllInWindow(null, function(tabs) {
+        for (var i = 0; i < tabs.length; i++) {
+          chrome.tabs.sendRequest(tabs[i].id, {disconnected: true});
+        }
+      });
+      // TODO: enable to pass callback
+      connectToServer();
+    } else {
+      var tab = chrome.tabs.get(tabId);
+      sendMessage('exit', validateURL(tab.url), 'bye');
+      // test code
+      //var username = TweetManager.instance.twitterBackend.username();
+      //message({'message':{msgType:'exit', url:visitingPages[tabId], username: username, message:"bye!",}});
+    }
   });
 
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
