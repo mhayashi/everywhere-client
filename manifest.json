@@ -21,8 +21,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*" , "https://*/*"],
-      "css": ["css/reset.css", "css/jquery.qtip.css", "css/dock.css"],
+      "matches": ["http://*/*" ,  "https://twitter.com/oauth/authorize"],
+      "css": ["css/jquery.qtip.css", "css/dock.css"],
       "js": ["lib/3rdparty/jquery.js", "lib/3rdparty/jquery.qtip.min.js", "lib/utils.js", "lib/dock.js", "lib/oauth_authorizer.js"],
       "run_at": "document_end"
     }
