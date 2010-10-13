@@ -9,14 +9,13 @@
 *   http://en.wikipedia.org/wiki/MIT_License
 *   http://en.wikipedia.org/wiki/GNU_General_Public_License
 *
-* Date: Tue Sep 14 18:26:27 2010 +0100
+* Date: Sun Oct 3 17:45:11 2010 +0100
 */
 
 .ui-tooltip-accessible{
-	left: -10000em !important;
-	top: -10000em !important;
-	display: block !important;
-	visibility: hidden !important;
+	left: -31512px;
+	display: block;
+	visibility: hidden;
 }
 
 	/* IE6 ONLY - Width detection fix */
@@ -52,6 +51,7 @@
 
 	.ui-tooltip .ui-tooltip-titlebar{
 		position: relative;
+		min-height: 19px;
 		padding: 6px 35px 6px 10px;
 
 		font-weight: bold;
@@ -209,7 +209,7 @@
 	}
 
 
-/*! Add shadows to your tooltips in all supported browsers */
+/*! Add shadows to your tooltips in: FF3+, Chrome 2+, Opera 10.6+, IE6+, Safari 2+ */
 .ui-tooltip-shadow{
   -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
@@ -217,6 +217,14 @@
 
   filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=5, OffY=5, Color='gray');
   -ms-filter:"progid:DXImageTransform.Microsoft.dropshadow(OffX=5, OffY=5, Color='gray')";
+}
+
+/*! Add rounded corners to your tooltips in: FF3+, Chrome 2+, Opera 10.6+, IE9+, Safari 2+ */
+.ui-tooltip-rounded .ui-tooltip-wrapper{
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
 }
 
 div.ui-tooltip-tip{
@@ -249,6 +257,10 @@ div.ui-tooltip-tip{
 
 	background-color: black;
 	cursor: pointer;
+
+	opacity: 0.7;
+	filter:alpha(opacity=70);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
 
 	/* Set this to any below 15000 (default starting z-index for qTips) */
 	z-index: 14999;
