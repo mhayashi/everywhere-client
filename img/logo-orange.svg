@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48px"
+   height="48px"
+   id="svg2816"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="New document 2">
+  <defs
+     id="defs2818">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 24 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="48 : 24 : 1"
+       inkscape:persp3d-origin="24 : 16 : 1"
+       id="perspective2824" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="46.82143"
+     inkscape:cy="36.377715"
+     inkscape:current-layer="layer2"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="1231"
+     inkscape:window-height="809"
+     inkscape:window-x="993"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata2821">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Background"
+     inkscape:groupmode="layer">
+    <rect
+       style="fill:#b7ca54;fill-opacity:1"
+       id="rect2826"
+       width="48"
+       height="48"
+       x="0"
+       y="-3.5527137e-15"
+       ry="7.0819402" />
+    <path
+       style="fill:#b7ca54;fill-opacity:1"
+       d="M 5.1428571,47.616323 C 2.7740687,46.850476 1.0818599,45.153729 0.33712736,42.797703 0.08395363,41.996767 0.07142857,41.108621 0.07142857,23.957143 l 0,-18.0000001 L 0.3977804,5.0130627 C 1.1965427,2.7023794 2.7357716,1.1961626 5.1428571,0.36975403 5.8968739,0.1108825 6.6576147,0.1 24,0.1 c 17.342386,0 18.103126,0.0108826 18.857143,0.26975403 1.278863,0.43906321 2.026287,0.87200337 2.816423,1.63139107 0.930654,0.8944388 1.508768,1.7972606 1.928654,3.0119176 l 0.326351,0.9440802 0,18.0000001 c 0,17.151478 -0.01253,18.039624 -0.265698,18.84056 -0.756416,2.392986 -2.538189,4.145533 -4.938802,4.857794 -0.69627,0.206583 -2.624847,0.229429 -18.785714,0.222534 C 7.0795451,47.87084 5.8783579,47.854114 5.1428571,47.616323 z"
+       id="path2828" />
+    <path
+       style="fill:#ff5400;fill-opacity:1"
+       d="M 5.1428571,47.616323 C 2.7755093,46.850941 1.0482901,45.116014 0.32493204,42.776896 0.08784411,42.010226 0.07142857,40.791559 0.07142857,23.957143 l 0,-18.0000001 L 0.3977804,5.0130627 C 1.2018014,2.6871667 2.7199241,1.2016034 5.1428571,0.36975403 5.8968739,0.1108825 6.6576147,0.1 24,0.1 c 17.342386,0 18.103126,0.0108826 18.857143,0.26975403 2.422933,0.83184937 3.941056,2.31741267 4.745077,4.64330867 l 0.326351,0.9440802 0,18.0000001 c 0,16.834416 -0.01641,18.053083 -0.253502,18.819753 -0.547662,1.770968 -1.973496,3.533517 -3.472593,4.292653 -1.701973,0.861871 -0.574357,0.816882 -20.264119,0.808482 C 7.0795451,47.87084 5.8783579,47.854114 5.1428571,47.616323 z"
+       id="path2830" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Font">
+    <text
+       xml:space="preserve"
+       style="font-size:56px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Yanone Kaffeesatz;-inkscape-font-specification:Yanone Kaffeesatz Light"
+       x="10.142859"
+       y="44"
+       id="text3621"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3623"
+         x="10.142859"
+         y="44"
+         style="font-size:56px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;font-family:Yanone Kaffeesatz;-inkscape-font-specification:Yanone Kaffeesatz Light;fill:#ffffff;fill-opacity:1">E!</tspan></text>
+  </g>
+</svg>
