@@ -1,5 +1,8 @@
 /* menu  */
 
+/* @font-face { font-family: Keffeesatz; src: url(YanoneKaffeesatz-Light.otf) format("opentype") } */
+/* @font-face { font-family: KeffeesatzBold; src: url(YanoneKaffeesatz-Bold.otf) format("opentype") } */
+
 #everywhere-menu-button {
     z-index: 30000 !important;
     position: fixed !important;
@@ -42,8 +45,9 @@ a.everywhere-dock-item {
 	display: block !important;
 	width: 30px !important;
     position: absolute !important;
-	font: bold 12px Arial, Helvetica, sans-serif !important;
-	color: #000 !important;
+	font: normal 12px Keffeesatz, Arial, Helvetica, sans-serif !important;
+    text-decoration: none !important;
+	color: #fff !important;
 }
 
 a.everywhere-dock-item img {
@@ -70,13 +74,13 @@ div[id^="ui-tooltip-everywhere-"] {
 
 div[id^="ui-tooltip-everywhere-"] .ui-tooltip-wrapper {
     background: transparent !important;
-    color: #e3e3e3 !important;
+    color: #000 !important;
     position: relative !important;
 }
 
 div[id^="ui-tooltip-everywhere-"] .ui-tooltip-titlebar {
     background: rgba(30, 33, 38, 0.9) !important;
-    color: #e3e3e3 !important;
+    color: #7ac000 !important;
     position: relative !important;
     -webkit-border-radius: 5px !important;
 }
@@ -87,7 +91,7 @@ div[id^="ui-tooltip-everywhere-"] .ui-tooltip-tip {
 
 div[id^="ui-tooltip-everywhere-"] .ui-tooltip-content {
     background: transparent !important;
-    color: #e3e3e3 !important;
+    color: #fff !important;
     position: relative !important;
 }
 
@@ -96,13 +100,13 @@ div[id^="ui-tooltip-everywhere-"] .ui-tooltip-content {
 }
 
 div[id^="ui-tooltip-everywhere-"] a {
-    font-weight: bold !important;
-    color: #B7CA54 !important;
+    color: #7ac000 !important;
     text-decoration: none !important;
 }
 
 div[id^="ui-tooltip-everywhere-"] a#hover {
-    text-decoration: underline !important;
+    color: #ff5400 !important;
+    text-decoration: none !important;
 }
 
 div[id^="ui-tooltip-everywhere-user-"] {
@@ -169,10 +173,11 @@ div[id^="ui-tooltip-everywhere-user-"] {
 #ui-tooltip-everywhere-log-content textarea {
     background: transparent !important;
     font: normal 12px Arial, Helvetica, sans-serif !important;
-    color: #e3e3e3 !important;
+    color: #fff !important;
     margin: 8px !important;
 	padding: 0px !important;
     width: 200px !important;
+    height: 100px !important;
     border: 1px solid #ccc !important;
     overflow: auto;
 	-webkit-box-shadow: 0px 0px 0px (255, 255, 255, 0.0) !important;
