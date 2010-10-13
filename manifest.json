@@ -4,7 +4,7 @@
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "browser_action": {
-    "default_icon": "img/icon19.png",
+    "default_icon": "img/logo-black.png",
     "default_title": "Everywhere!",
     "popup": "popup.html"
   },
@@ -16,9 +16,9 @@
     "https://*/*"
   ],
   "icons": {
-    "19": "img/icon19.png",
-    "32": "img/icon32.png",
-    "48": "img/icon48.png"
+    "19": "img/logo-black.png",
+    "32": "img/logo-black.png",
+    "48": "img/logo-black.png"
   },
   "content_scripts": [
     {
@@ -27,7 +27,6 @@
       "js": ["lib/3rdparty/jquery.js", "lib/3rdparty/jquery.qtip.min.js", "lib/utils.js", "lib/dock.js", "lib/oauth_authorizer.js"],
       "run_at": "document_end"
     }
-  ]
-//   "options_page": "options.html",
-//   "update_url": "http://clients2.google.com/service/update2/crx"
+  ],
+  "update_url": "http://clients2.google.com/service/update2/crx"
 }
