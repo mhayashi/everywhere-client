@@ -1,8 +1,7 @@
 {
   "name": "Everywhere!",
-  "version": "0.0.1",
-  "description": "__MSG_extDescription__",
-  "default_locale": "en",
+  "version": "0.0.2",
+  "description": "Everywhere! enables you to chat everywhere",
   "browser_action": {
     "default_icon": "img/logo-black.png",
     "default_title": "Everywhere!",
