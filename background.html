@@ -919,6 +919,7 @@ TweetManager.prototype = {
         return;
       }
       myInfo = user;
+      localStorage.setItem('myInfo', JSON.stringify(myInfo));
       if (development) {
         console.log('getMyInfo');
         console.log(myInfo);
@@ -1090,7 +1091,7 @@ var dumpObj = function(o) {
   }
 }
 
-var myInfo = null;
+var myInfo = JSON.parse(localStorage.getItem('myInfo'));
 
 // chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 //   console.log('sender');
