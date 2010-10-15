@@ -1,12 +1,12 @@
-## Chat Everywhereh ##
+## Everywhere! ##
 
 1. What is it?
 
-    Chat Everywhere enables chatting on any webpage.
+    Everywhere! enables you to chat on any webpage.
 
 2. Installing
 
-    Check the [download page](http://everywhere.fam.cx/)
+    Check the [download page](http://chrome.google.com/extensions/detail/hfedmdjechicpkhpimjpgmmnkgldoofb/)
 
 3. License
 
