@@ -21,9 +21,22 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*" ,  "https://twitter.com/oauth/authorize"],
-      "css": ["css/jquery.qtip.css", "css/dock.css"],
-      "js": ["lib/3rdparty/jquery.js", "lib/3rdparty/jquery.qtip.min.js", "lib/utils.js", "lib/dock.js", "lib/oauth_authorizer.js"],
+      "matches": [
+        "http://*/*" ,
+        "https://twitter.com/oauth/authorize"
+      ],
+      "css": [
+        "css/jquery.qtip.css",
+        "css/dock.css"
+      ],
+      "js": [
+        "lib/3rdparty/jquery.js",
+        "lib/3rdparty/jquery.qtip.min.js",
+        "lib/utils.js",
+        "lib/dock.js",
+        "lib/oauth_authorizer.js",
+        "lib/3rd"
+      ],
       "run_at": "document_end"
     }
   ],
