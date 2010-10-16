@@ -1222,6 +1222,13 @@ function initializeExtension() {
     }
   });
 
+  console.log(TweetManager.instance.twitterBackend);
+  if(!TweetManager.instance.twitterBackend.authenticated() &&
+     !TweetManager.instance.twitterBackend.tokenRequested()) {
+    console.log('aaa');
+    TweetManager.instance.twitterBackend.startAuthentication();
+  }
+  
   // send 'join' message to the server when a tab is opened
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if (socket.connected === false) {
