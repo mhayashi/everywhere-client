@@ -30,12 +30,20 @@
         "css/dock.css"
       ],
       "js": [
-        "lib/3rdparty/jquery.js",
-        "lib/3rdparty/jquery.qtip.min.js",
+        "lib/3rdparty/jquery-1.4.2.min.js",
+        "lib/3rdparty/jquery-ui-personalized-1.5.3.min.js",
+        "lib/3rdparty/jquery.jeditable.js",
+        "lib/3rdparty/json2.js",
+        "lib/3rdparty/persist.js",
+        "lib/3rdparty/jquery.jeditable.autogrow.js",
+        "lib/3rdparty/jquery.autogrow.js",
+        "lib/3rdparty/jquery.jeditable.ajaxupload.js",
+        "lib/3rdparty/jquery.ajaxfileupload.js",
         "lib/utils.js",
         "lib/dock.js",
         "lib/oauth_authorizer.js",
-        "lib/3rd"
+        "lib/lwe.js",
+        "lib/connector.js"
       ],
       "run_at": "document_end"
     }
