@@ -1,0 +1,128 @@
+.lwe-editable-textarea,
+.lwe-editable form,
+.lwe-editable input {
+    margin: inherit !important;
+    padding: inherit !important;
+    font: inherit !important;
+    color: inherit !important;
+    background: inherit !important;
+    border: inherit !important;
+}
+
+#everywhere-lwe-iframe-background {
+    z-index:1000000 !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 30px !important;
+    top: 0px !important;
+    left: 0px !important;
+    background: rgba(0, 0, 0, 1.0) !important;
+    display:none;
+}
+#everywhere-lwe-iframe {
+    z-index:1000000 !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 30px !important;
+    top: 0px !important;
+    left: 0px !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    display:none;
+}
+#everywhere-lwe-toolbar-menu {
+    z-index: 1000000 !important;
+    position: fixed !important;
+    width: 30px !important;
+    height: 30px !important;
+    top: 0px !important;
+    left: 0px !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    color: #ffffff !important;
+    text-align: center !important;
+	font: bold 16px Arial, Helvetica, sans-serif !important;
+    /* -webkit-border-radius: 4px !important; */
+}
+#everywhere-lwe-toolbar {
+    z-index: 1000000 !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 30px !important;
+    top: 0px !important;
+    left: 0px !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    color: #ffffff !important;
+    text-align: center !important;
+	font: bold 16px Arial, Helvetica, sans-serif !important;
+    /* -webkit-border-bottom-left-radius: 4px !important; */
+    /* -webkit-border-bottom-right-radius: 4px !important; */
+    display:none;
+}
+.everywhere-lwe-toolbar-button {
+    cursor: pointer !important;
+    background: #000;
+    margin: 2px !important;
+    display: inline-block !important;
+    padding: 5px !important;
+    font: bold 12px Arial, Helvetica, sans-serif !important;
+    color: #e3e3e3;
+    text-decoration: none !important;
+    line-height: 1 !important;
+    -webkit-border-radius: 5px !important;
+    -webkit-box-shadow: 0px 0px 0px #999 !important;
+    /* text-shadow: 0 -1px 1px #222 !important; */
+    /* border-bottom: 1px solid #222 !important; */
+    border: 1px solid #ccc !important;
+    position: relative !important;
+    cursor: pointer !important;
+}
+.everywhere-lwe-users {
+    float: left;
+}
+.everywhere-lwe-users img {
+    clear: both;
+}
+.everywhere-lwe-users span {
+    clear: both;
+}
+#everywhere-lwe-toolbar-edit-button {
+}
+#everywhere-lwe-toolbar-restore-button {
+}
+#everywhere-lwe-toolbar-editor-button {
+    width: 100px !important;
+}
+#everywhere-lwe-share-dialog {
+    z-index: 1000000 !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    top: 100px !important;
+    width: 500px !important;
+    height: 300px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+}
+.everywhere-lwe-share-dialog-text {
+    color: #e3e3e3 !important;
+    padding: 10px 10px 20px !important;
+}
+#everywhere-lwe-share-dialog-close-button {
+    right: 0px !important;
+    bottom: 0px !important;
+}
+#everywhere-lwe-share-dialog-online-users {
+	font: normal 10px Arial, Helvetica, sans-serif !important;
+}
+#everywhere-lwe-share-dialog-online-user {
+}
+#everywhere-lwe-share-dialog-online-user img {
+	width: 40px !important; 
+	height: 40px !important; 
+	border: none !important; 
+    border-radius: 4px !important;
+    clear:both !important;
+}
+#everywhere-lwe-share-dialog-online-user div{
+    clear:both !important;
+}

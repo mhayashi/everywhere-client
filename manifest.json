@@ -3,21 +3,21 @@
   "version": "0.0.6",
   "description": "Everywhere! enables you to chat on any web page",
   "browser_action": {
-    "default_icon": "img/logo-black.png",
-    "default_title": "Everywhere!",
-    "popup": "popup.html"
+    "default_icon": "img/inactive.png",
+    "default_title": "Everywhere!"
   },
   "background_page": "background.html",
   "permissions": [
     "notifications",
     "tabs",
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "unlimitedStorage"
   ],
   "icons": {
-    "19": "img/logo-black.png",
-    "32": "img/logo-black.png",
-    "48": "img/logo-black.png"
+    "19": "img/inactive.png",
+    "32": "img/inactive.png",
+    "48": "img/inactive.png"
   },
   "content_scripts": [
     {
@@ -26,10 +26,13 @@
         "https://twitter.com/oauth/authorize"
       ],
       "css": [
+        "css/lwe.css",
         "css/jquery.qtip.css",
         "css/dock.css"
       ],
       "js": [
+        "lib/3rdparty/html4-defs.js",
+        "lib/3rdparty/html-sanitizer.js",
         "lib/3rdparty/jquery-1.4.2.min.js",
         "lib/3rdparty/jquery-ui-personalized-1.5.3.min.js",
         "lib/3rdparty/jquery.jeditable.js",
@@ -39,14 +42,15 @@
         "lib/3rdparty/jquery.autogrow.js",
         "lib/3rdparty/jquery.jeditable.ajaxupload.js",
         "lib/3rdparty/jquery.ajaxfileupload.js",
-        "lib/utils.js",
-        "lib/dock.js",
-        "lib/oauth_authorizer.js",
         "lib/lwe.js",
-        "lib/connector.js"
+        "lib/utils.js",
+        "lib/3rdparty/jquery.qtip.min.js",
+        "lib/dock.js",
+        "lib/oauth_authorizer.js"
       ],
       "run_at": "document_end"
     }
   ],
+  "options_page": "options.html",
   "update_url": "http://clients2.google.com/service/update2/crx"
 }
