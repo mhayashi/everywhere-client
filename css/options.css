@@ -159,3 +159,61 @@ div.checkerboard {
 canvas#nerds {
   display: block;
 }
+
+
+
+
+
+
+#container {
+	margin: 50px auto;
+	width: 600px;
+	background:#fff;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    border-radius: 15px;
+}
+#header {
+	background: #106927;
+	padding: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+#content {
+}
+#footer {
+	background: #106927;
+}
+h1 {
+    font-size: 20px;
+    color: #fff;
+}
+table {
+    width: 600px;
+    margin: 10px;
+	padding: 10px;
+}
+th {
+    font-weight: bold:
+    width: 200px;
+    text-align: right;
+    padding: 5px;
+}
+td {
+    width: 400px;
+    text-align: left;
+    padding: 5px;
+}
+#save-button {
+    /* text-align: center; */
+	padding: 10px 0px 15px 250px;
+}
+button {
+    /* margin-left: 50px; */
+    left: 200px;
+    font-size: 15px;
+    width: 100px;
+}
+#message {
+    
+}

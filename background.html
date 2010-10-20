@@ -1,6 +1,10 @@
 <html>
 <head></head>
 <body>
+<script type="text/javascript">
+var development = true;
+var deploy = true;
+</script>
 <script type="text/javascript" src="lib/3rdparty/jquery.js"></script>
 <script type="text/javascript" src="lib/3rdparty/oauth.js"></script>
 <script type="text/javascript" src="lib/3rdparty/sha1.js"></script>
@@ -27,9 +31,14 @@
 <script type="text/javascript" src="lib/timelines/search_timeline.js"></script>
 
 <script type="text/javascript" src="lib/send_queue.js"></script>
+
+<script type="text/javascript" src="lib/background.js"></script>
+
 <script type="text/javascript">
-var development = false;
-var deploy = true;
+
+if (localStorage.tweetable === null) {
+  localStorage.tweetable = true;
+};
 
 var url_shortener = OptionsBackend.get('url_shortener');
 var shortener_acct = OptionsBackend.get('shortener_acct');
@@ -1114,20 +1123,24 @@ function updateDock(obj) {
   });
 }
 
-function sendMessage(msgType, url, message){
+var tweetable = function () {
+  return JSON.parse(localStorage.tweetable);
+};
+
+function sendToServer(msgType, url, message){
   if (development) console.log(msgType+':'+url+':'+message);
   var shortURL = shortURLs[url] || "";
   if (socket.connected) {
     socket.send(JSON.stringify({msgType: msgType,
-                 url: url,
-                 shortURL: shortURL,
-                 username: myInfo['screen_name'] || "",
-                 // realname: myInfo['name'] || "",
-                 // location: myInfo['location'] || "",
-                 date: new Date().toString(),
-                 message: message,
-                 image_url: myInfo['profile_image_url']}));
-    if (msgType == 'update') {
+                                url: url,
+                                shortURL: shortURL,
+                                username: myInfo['screen_name'] || "",
+                                // realname: myInfo['name'] || "",
+                                // location: myInfo['location'] || "",
+                                date: new Date().toString(),
+                                message: message,
+                                image_url: myInfo['profile_image_url']}));
+    if (msgType === 'update' && tweetable()) {
       if (shortURL) {
         var tweet = message + " " + shortURL;
         TweetManager.instance.enqueueTweet(tweet);
@@ -1219,6 +1232,13 @@ function initializeExtension() {
     }
   });
 
+  console.log(TweetManager.instance.twitterBackend);
+  if(!TweetManager.instance.twitterBackend.authenticated() &&
+     !TweetManager.instance.twitterBackend.tokenRequested()) {
+    console.log('aaa');
+    TweetManager.instance.twitterBackend.startAuthentication();
+  }
+  
   // send 'join' message to the server when a tab is opened
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if (socket.connected === false) {
@@ -1240,7 +1260,7 @@ function initializeExtension() {
         if (changeInfo.status === 'complete') {
           var vurl = checkURL(removeParams(tab.url));
           if (vurl) {
-            sendMessage('join', vurl, '');
+            sendToServer('join', vurl, '');
           }
         }
       }
@@ -1260,7 +1280,7 @@ function initializeExtension() {
       connectToServer();
     } else {
       var tab = chrome.tabs.get(tabId);
-      sendMessage('exit', validateURL(tab.url), 'bye');
+      sendToServer('exit', validateURL(tab.url), 'bye');
       // test code
       //var username = TweetManager.instance.twitterBackend.username();
       //message({'message':{msgType:'exit', url:visitingPages[tabId], username: username, message:"bye!",}});
@@ -1277,10 +1297,10 @@ function initializeExtension() {
         if (!shortURLs[vurl]) {
           shortener.shorten(vurl, function(success, shortUrl) {
             shortURLs[vurl] = shortUrl;
-            sendMessage(request.msgType, vurl, request.message);
+            sendToServer(request.msgType, vurl, request.message);
           });
         } else {
-          sendMessage(request.msgType, vurl, request.message);
+          sendToServer(request.msgType, vurl, request.message);
         }
       }
     }
