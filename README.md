@@ -1,13 +1,14 @@
-## Everywhere! ##
+## Everywhere! Client ##
 
 1. What is it?
 
-    Everywhere! enables you to chat on any webpage.
+    Everywhere! enables you to chat and edit on any webpage.
+    Check the [web site](http://everywhere.no.de)
 
 2. Installing
 
-    Check the [download page](http://chrome.google.com/extensions/detail/hfedmdjechicpkhpimjpgmmnkgldoofb/)
+    Check the [download page](http://chrome.google.com/extensions/detail/hfedmdjechicpkhpimjpgmmnkgldoofb)
 
 3. License
 
-    This project uses the very simple and permissive MIT license. Check the LICENSE file.
+    Everywhere! client is licensed under the MIT license.
