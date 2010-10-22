@@ -92,6 +92,18 @@
 #everywhere-lwe-toolbar-editor-button {
     width: 100px !important;
 }
+.everywhere-lwe-dialog {
+    z-index: 1000000 !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    top: 100px !important;
+    width: 500px !important;
+    height: 300px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+    color: #e3e3e3 !important;
+}
 #everywhere-lwe-share-dialog {
     z-index: 1000000 !important;
     background: rgba(0, 0, 0, 0.8) !important;
