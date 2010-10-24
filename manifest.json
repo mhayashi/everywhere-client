@@ -1,6 +1,6 @@
 {
   "name": "Everywhere!",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Chat/Edit Everywhere!",
   "browser_action": {
     "default_icon": "img/inactive.png",
