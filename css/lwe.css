@@ -1,12 +1,18 @@
-.lwe-editable-textarea,
-.lwe-editable form,
-.lwe-editable input {
+textarea {
+	font: normal 14px Arial, Helvetica, sans-serif !important;
+    color: inherit !important;
+    background: white !important;
+}
+.lwe-editable-textarea {
     margin: inherit !important;
     padding: inherit !important;
-    font: inherit !important;
+	font: normal 13px Arial, Helvetica, sans-serif !important;
     color: inherit !important;
     background: inherit !important;
     border: inherit !important;
+}
+.lwe-editable:hover {
+    background: rgba(0, 0, 0, 0.2) !important;
 }
 
 #everywhere-lwe-iframe-background {
@@ -87,7 +93,7 @@
 }
 #everywhere-lwe-toolbar-edit-button {
 }
-#everywhere-lwe-toolbar-restore-button {
+#everywhere-lwe-toolbar-original-button {
 }
 #everywhere-lwe-toolbar-editor-button {
     width: 100px !important;
@@ -97,7 +103,8 @@
     background: rgba(0, 0, 0, 0.8) !important;
     top: 100px !important;
     width: 500px !important;
-    height: 300px !important;
+    min-height: 100px !important;
+    max-height: 300px !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
     border-radius: 10px !important;
@@ -119,14 +126,30 @@
     color: #e3e3e3 !important;
     padding: 10px 10px 20px !important;
 }
+.everywhere-lwe-dialog-buttons {
+    clear:both !important;
+}
 #everywhere-lwe-share-dialog-close-button {
-    right: 0px !important;
-    bottom: 0px !important;
+    clear:both !important;
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+    /* max-height: 200px !important; */
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
 }
 #everywhere-lwe-share-dialog-online-users {
 	font: normal 10px Arial, Helvetica, sans-serif !important;
 }
-#everywhere-lwe-share-dialog-online-user {
+.everywhere-lwe-share-dialog-online-user {
+    margin: 3px !important;
+    float: left !important;
+}
+.everywhere-lwe-share-dialog-online-user-noshared {
+	border: none !important;
+}
+.everywhere-lwe-share-dialog-online-user-shared {
+	border: 3px solid white !important;
+    border-radius: 4px !important;
 }
 #everywhere-lwe-share-dialog-online-user img {
 	width: 40px !important; 

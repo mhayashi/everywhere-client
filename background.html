@@ -1080,19 +1080,36 @@ $.ajax({
   }
 });
 
-var socket;
-connectToServer();
 
-function connectToServer() {
+var transferMessage = function(obj) {
+  if (development) console.log(obj);
+  chrome.tabs.getAllInWindow(null, function(tabs) {
+    for (var i in tabs) {
+      if (tabs[i].url === obj.message.url) {
+        chrome.tabs.sendRequest(tabs[i].id, obj);
+        // Do not break
+        // Users might open the same webpage in multiple tabs
+      }
+    }
+  });
+}
+
+var socket;
+
+var connectToServer = function() {
   var host = deploy ? 'everywhere.no.de' : 'localhost';
   socket = new io.Socket(host, {port: 8000});
   //console.log('connecting...');
   socket.connect();
+
+  // message received
   socket.on('message', function(msg) {
     var obj =  JSON.parse(msg);
-    updateDock(obj);
+    transferMessage(obj);
   });
 }
+
+connectToServer();
 
 var dumpObj = function(o) {
   var str = "";
@@ -1111,33 +1128,18 @@ var myInfo = JSON.parse(localStorage.getItem('myInfo'));
 //   }
 // });
 
-function updateDock(obj) {
-  if (development) console.log(obj);
-  chrome.tabs.getAllInWindow(null, function(tabs) {
-    for (var i in tabs) {
-      if (tabs[i].url == obj.message.url) {
-        chrome.tabs.sendRequest(tabs[i].id, obj);
-        // do not break
-        // a user might open a same webpage in multiple tabs
-      }
-    }
-  });
-}
-
 var tweetable = function () {
   return JSON.parse(localStorage.tweetable);
 };
 
 function sendToServer(msgType, url, message){
-  if (development) console.log(msgType+':'+url+':'+message);
+  if (development) console.log(msgType, url, message);
   var shortURL = shortURLs[url] || "";
   if (socket.connected) {
     socket.send(JSON.stringify({msgType: msgType,
                                 url: url,
                                 shortURL: shortURL,
                                 username: myInfo['screen_name'] || "",
-                                // realname: myInfo['name'] || "",
-                                // location: myInfo['location'] || "",
                                 date: new Date().toString(),
                                 message: message,
                                 image_url: myInfo['profile_image_url']}));
@@ -1162,7 +1164,9 @@ function removeParams(url) {
       url = urlparts[0];
     }
   }
-  url.replace(/\/$/, '');
+  //TODO it might be unecessary. chrome automatically add '/' to some url.
+  //url = url.replace(/\/$/, '');
+  
 //   urlparts = url.split('?');
 //   if (urlparts.length>=2) {
 //     /*
@@ -1240,10 +1244,14 @@ function initializeExtension() {
     console.log('aaa');
     TweetManager.instance.twitterBackend.startAuthentication();
   }
-  
-  // send 'join' message to the server when a tab is opened
+
+  /*
+   * send 'join' message to the server when a tab is opened
+   */
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if (socket.connected === false) {
+      // TODO: turn badge -> x
+      
       // tell all tabs the server is disconnected.
       chrome.tabs.getAllInWindow(null, function(tabs) {
         for (var i = 0; i < tabs.length; i++) {
@@ -1259,7 +1267,7 @@ function initializeExtension() {
           TweetManager.instance.getMyInfo();
         }
       } else {
-        if (changeInfo.status === 'complete') {
+        if (changeInfo.status === 'loading') {
           var vurl = checkURL(removeParams(tab.url));
           if (vurl) {
             sendToServer('join', vurl, '');
@@ -1290,18 +1298,24 @@ function initializeExtension() {
   });
 
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    // username is requested from content script
     if (request.getUsername) {
       //console.log(myInfo['screen_name']);
       sendResponse(myInfo['screen_name']);
-    } else if (request.msgType) {
+    }
+    // send request
+    else if (request.msgType) {
       var vurl = validateURL(request.url);
       if (vurl) {
-        if (!shortURLs[vurl]) {
-          shortener.shorten(vurl, function(success, shortUrl) {
-            shortURLs[vurl] = shortUrl;
-            sendToServer(request.msgType, vurl, request.message);
-          });
-        } else {
+        if (request.msgType === 'update') {
+          if (!shortURLs[vurl]) {
+            shortener.shorten(vurl, function(success, shortUrl) {
+              shortURLs[vurl] = shortUrl;
+              sendToServer(request.msgType, vurl, request.message);
+            });
+          }
+        }
+        else {
           sendToServer(request.msgType, vurl, request.message);
         }
       }
