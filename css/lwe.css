@@ -82,6 +82,10 @@ textarea {
     position: relative !important;
     cursor: pointer !important;
 }
+.everywhere-lwe-toolbar-button-disable {
+    background: #555 !important;
+    color: #333 !important;
+}
 .everywhere-lwe-users {
     float: left;
 }
@@ -97,6 +101,9 @@ textarea {
 }
 #everywhere-lwe-toolbar-editor-button {
     width: 100px !important;
+}
+.everywhere-lwe-toolbar-space {
+    min-width: 100px !important;
 }
 .everywhere-lwe-dialog {
     z-index: 1000000 !important;
@@ -125,6 +132,12 @@ textarea {
 .everywhere-lwe-share-dialog-text {
     color: #e3e3e3 !important;
     padding: 10px 10px 20px !important;
+}
+.everywhere-lwe-dialog-title {
+    background: rgba(0, 0, 0, 1.0) !important;
+    color: #e3e3e3 !important;
+}
+.everywhere-lwe-dialog-text {
 }
 .everywhere-lwe-dialog-buttons {
     clear:both !important;
@@ -160,4 +173,45 @@ textarea {
 }
 #everywhere-lwe-share-dialog-online-user div{
     clear:both !important;
+}
+
+.everywhere-lwe-tip-title {
+	font: bold 14px Arial, Helvetica, sans-serif !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-radius: 4px !important;
+    color: #e3e3e3 !important;
+    padding: 10px !important;
+    float: left !important;
+}
+
+.everywhere-lwe-tip {
+	font: normal 14px Arial, Helvetica, sans-serif !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-radius: 4px !important;
+    color: #e3e3e3 !important;
+    position: fixed !important;
+    min-width: 200px !important;
+    max-width: 400px !important;
+    padding: 10px !important;
+}
+
+.everywhere-lwe-tip-original-text {
+}
+
+.everywhere-lwe-tip-title {
+	/* font: bold 14px Arial, Helvetica, sans-serif !important; */
+    background: transparent !important;
+    border-radius: 4px !important;
+    /* color: #e3e3e3 !important; */
+    padding: 10px !important;
+    float: left !important;
+}
+
+.everywhere-lwe-tip-text {
+	/* font: bold 14px Arial, Helvetica, sans-serif !important; */
+    background: transparent !important;
+    border-radius: 4px !important;
+    /* color: #e3e3e3 !important; */
+    padding: 10px !important;
+    float: left !important;
 }
