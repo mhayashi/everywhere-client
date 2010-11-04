@@ -932,8 +932,7 @@ TweetManager.prototype = {
       myInfo = user;
       localStorage.setItem('myInfo', JSON.stringify(myInfo));
       if (development) {
-        console.log('getMyInfo');
-        console.log(myInfo);
+        //console.log('getMyInfo', myInfo);
       }
     }, username);
   },
@@ -1134,7 +1133,7 @@ var tweetable = function () {
 };
 
 function sendToServer(msgType, url, message){
-  if (development) console.log(msgType, url, message);
+  if (development) console.log('snd', msgType, url, message);
   var shortURL = shortURLs[url] || "";
   if (socket.connected) {
     socket.send(JSON.stringify({ msgType: msgType,
@@ -1239,7 +1238,7 @@ function initializeExtension() {
     }
   });
 
-  console.log(TweetManager.instance.twitterBackend);
+  //console.log(TweetManager.instance.twitterBackend);
   if(!TweetManager.instance.twitterBackend.authenticated() &&
      !TweetManager.instance.twitterBackend.tokenRequested()) {
     console.log('aaa');
@@ -1357,9 +1356,56 @@ function initializeExtension() {
     });
   }
 
+  var translateByBing = function(src, tabid) {
+    var url = 'http://api.microsofttranslator.com/V2/Ajax.svc/';
+    var appId = '3AE7818AA94857DC0270505508515139C9E0D854';
+
+    var index = 0;
+    $.each(src, function(key, text) {
+      window['bingRespond'+index] = function(response) {
+        console.log(response);
+        chrome.tabs.sendRequest(tabid,
+                                { type: 'translated',
+                                  api: 'bing',
+                                  uid: key,
+                                  translation: response
+                                }
+                               );
+      }
+
+      var createTranslateFunc = function(index) {
+        return function (response) {
+          console.log(response);
+          $('body')
+            .append(
+              $('<script>')
+                .attr('src', url+"Translate?oncomplete=bingRespond"+index+"&appId="+appId+"&from="+response+"&to="+localStorage.language_code+"&text="+text));
+        }
+      };
+
+      window['bingTranslate'+index] = createTranslateFunc(index);
+      
+      $('body')
+        .append(
+          $('<script>')
+            .attr('src', url+"Detect?oncomplete=bingTranslate"+index+"&appId="+appId+"&text="+text));
+      
+      index++;
+    });
+  }
+  
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    if (request.type === 'translate' && request.api === 'google') {
-      translateByGoogle(request.src, sender.tab.id);
+    if (request.type === 'translate') {
+      switch(request.api) {
+      case 'google':
+        translateByGoogle(request.src, sender.tab.id);
+        break;
+      case 'bing':
+        translateByBing(request.src, sender.tab.id);
+        break;
+      default:
+        break;
+      }
     }
     else if (request.type === 'language') {
       //console.log(request.code);
