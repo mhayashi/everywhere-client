@@ -36,19 +36,6 @@ textarea {
     overflow: hidden !important;
     display:none;
 }
-#everywhere-lwe-toolbar-menu {
-    z-index: 1000000 !important;
-    position: fixed !important;
-    width: 30px !important;
-    height: 30px !important;
-    top: 0px !important;
-    left: 0px !important;
-    background: rgba(0, 0, 0, 0.8) !important;
-    color: #ffffff !important;
-    text-align: center !important;
-	font: bold 16px Arial, Helvetica, sans-serif !important;
-    /* -webkit-border-radius: 4px !important; */
-}
 #everywhere-lwe-toolbar {
     z-index: 1000000 !important;
     position: fixed !important;
@@ -57,6 +44,7 @@ textarea {
     top: 0px !important;
     left: 0px !important;
     background: rgba(0, 0, 0, 0.8) !important;
+    /* background: rgba(129, 194, 39, 0.8) !important; */
     color: #ffffff !important;
     text-align: center !important;
 	font: bold 16px Arial, Helvetica, sans-serif !important;
@@ -67,11 +55,13 @@ textarea {
 .everywhere-lwe-toolbar-button {
     cursor: pointer !important;
     background: #000;
+    /* background: rgba(129, 194, 39, 0.8) !important; */
     margin: 2px !important;
     display: inline-block !important;
     padding: 5px !important;
     font: bold 12px Arial, Helvetica, sans-serif !important;
-    color: #e3e3e3;
+    color: #e3e3e3 !important;
+    /* color: #000 !important; */
     text-decoration: none !important;
     line-height: 1 !important;
     -webkit-border-radius: 5px !important;
@@ -81,6 +71,20 @@ textarea {
     border: 1px solid #ccc !important;
     position: relative !important;
     cursor: pointer !important;
+}
+.everywhere-lwe-toolbar-button-disable {
+    background: #555 !important;
+    color: #333 !important;
+}
+.everywhere-lwe-tip-close-button {
+    position: relative !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    right: 0px !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 3px !important;
+    float: right !important;
 }
 .everywhere-lwe-users {
     float: left;
@@ -98,7 +102,11 @@ textarea {
 #everywhere-lwe-toolbar-editor-button {
     width: 100px !important;
 }
+.everywhere-lwe-toolbar-space {
+    min-width: 100px !important;
+}
 .everywhere-lwe-dialog {
+    display: table !important;
     z-index: 1000000 !important;
     background: rgba(0, 0, 0, 0.8) !important;
     top: 100px !important;
@@ -108,7 +116,21 @@ textarea {
     overflow-x: hidden !important;
     overflow-y: auto !important;
     border-radius: 10px !important;
-    padding: 10px !important;
+    /* padding: 10px !important; */
+    color: #e3e3e3 !important;
+}
+#everywhere-lwe-edit-dialog {
+    display: table !important;
+    z-index: 1000000 !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    top: 100px !important;
+    width: 300px !important;
+    min-height: 100px !important;
+    max-height: 300px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    border-radius: 10px !important;
+    padding: 0px !important;
     color: #e3e3e3 !important;
 }
 #everywhere-lwe-share-dialog {
@@ -122,12 +144,46 @@ textarea {
     border-radius: 10px !important;
     padding: 10px !important;
 }
+.everywhere-lwe-dialog-textarea {
+	font: normal 14px Arial, Helvetica, sans-serif !important;
+    width: 400px !important;
+    height: 100px !important;
+    color: #e3e3e3 !important;
+    background: transparent !important;
+    margin: 10px !important;
+    clear: both !important;
+}
 .everywhere-lwe-share-dialog-text {
     color: #e3e3e3 !important;
     padding: 10px 10px 20px !important;
 }
+.everywhere-lwe-dialog-title {
+    /* display: table-row !important; */
+	font: bold 15px Arial, Helvetica, sans-serif !important;
+    background: rgba(0, 0, 0, 1.0) !important;
+    height: 20px !important;
+    color: #e3e3e3 !important;
+    margin: 0px !important;
+    padding: 5px !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+.everywhere-lwe-dialog-content {
+    display: table !important;
+    z-index: 1000000 !important;
+    background: transparent !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    /* padding: 10px !important; */
+    color: #e3e3e3 !important;
+}
+.everywhere-lwe-dialog-text {
+}
 .everywhere-lwe-dialog-buttons {
-    clear:both !important;
+    width: 500px !important;
+    margin: 10px !important;
+    clear: both !important;
+    right: 0px !important;
 }
 #everywhere-lwe-share-dialog-close-button {
     clear:both !important;
@@ -160,4 +216,81 @@ textarea {
 }
 #everywhere-lwe-share-dialog-online-user div{
     clear:both !important;
+}
+
+.everywhere-lwe-tip-title {
+	font: bold 14px Arial, Helvetica, sans-serif !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    color: #e3e3e3 !important;
+    margin: 0px !important;
+    padding: 10px !important;
+    float: left !important;
+}
+
+.everywhere-lwe-tip {
+	font: normal 14px Arial, Helvetica, sans-serif !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-radius: 4px !important;
+    color: #e3e3e3 !important;
+    position: fixed !important;
+    min-width: 200px !important;
+    max-width: 400px !important;
+    padding: 10px !important;
+}
+
+.everywhere-lwe-tip-original-text {
+}
+
+.everywhere-lwe-tip-title {
+	/* font: bold 14px Arial, Helvetica, sans-serif !important; */
+    background: transparent !important;
+    /* color: #e3e3e3 !important; */
+    /* padding: 10px !important; */
+    margin: 0px !important;
+    padding: 0px !important;
+    border-radius: 10px !important;
+    /* float: left !important; */
+}
+
+.everywhere-lwe-tip-text {
+	/* font: bold 14px Arial, Helvetica, sans-serif !important; */
+    background: transparent !important;
+    border-radius: 4px !important;
+    /* color: #e3e3e3 !important; */
+    padding: 10px !important;
+    float: left !important;
+}
+
+.everywhere-lwe-dialog-center {
+    display: table-row !important;
+    /* position: inherit !important; */
+    /* text-align: center !important; */
+    /* left: auto !important; */
+    /* right: auto !important; */
+    /* align: center !important; */
+    /* padding-left: 50px !important; */
+    /* padding-right: 50px !important; */
+    padding: 10px !important;
+    margine-left: 0px !important;
+    vertical-align: middle !important;
+    clear: both !important;
+    float: none !important;
+}
+
+.everywhere-lwe-dialog-button-big {
+	/* font: normal 20px Helvetica, Arial, sans-serif !important; */
+    float: left !important;
+    width: 100px !important;
+    height: 50px !important;
+}
+
+.everywhere-lwe-dialog-text {
+    float: left !important;
+    margin: 10px !important;
+    padding: 10px !important;
+}
+
+.everywhere-lwe-button-disabled {
+    color: #333;
+    background: #555;
 }

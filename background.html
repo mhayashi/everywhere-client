@@ -6,6 +6,8 @@ var development = true;
 var dev_clearhistory = false;
 var deploy = false;
 </script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
 <script type="text/javascript" src="lib/3rdparty/jquery.js"></script>
 <script type="text/javascript" src="lib/3rdparty/oauth.js"></script>
 <script type="text/javascript" src="lib/3rdparty/sha1.js"></script>
@@ -36,7 +38,6 @@ var deploy = false;
 <script type="text/javascript" src="lib/background.js"></script>
 
 <script type="text/javascript">
-
 if (localStorage.tweetable === null) {
   localStorage.tweetable = true;
 };
@@ -135,7 +136,7 @@ function TweetManager() {
 
   this.authenticated = false;
 
-  this.initIconAndAlerts();
+  // this.initIconAndAlerts();
 
   this.twitterBackend = new TwitterLib(
     function onAuthenticated() {
@@ -931,8 +932,7 @@ TweetManager.prototype = {
       myInfo = user;
       localStorage.setItem('myInfo', JSON.stringify(myInfo));
       if (development) {
-        console.log('getMyInfo');
-        console.log(myInfo);
+        //console.log('getMyInfo', myInfo);
       }
     }, username);
   },
@@ -1133,16 +1133,16 @@ var tweetable = function () {
 };
 
 function sendToServer(msgType, url, message){
-  if (development) console.log(msgType, url, message);
+  if (development) console.log('snd', msgType, url, message);
   var shortURL = shortURLs[url] || "";
   if (socket.connected) {
-    socket.send(JSON.stringify({msgType: msgType,
-                                url: url,
-                                shortURL: shortURL,
-                                username: myInfo['screen_name'] || "",
-                                date: new Date().toString(),
-                                message: message,
-                                image_url: myInfo['profile_image_url']}));
+    socket.send(JSON.stringify({ msgType: msgType,
+                                 url: url,
+                                 shortURL: shortURL,
+                                 username: myInfo['screen_name'] || "",
+                                 date: new Date().toString(),
+                                 message: message,
+                                 image_url: myInfo['profile_image_url'] }));
     if (msgType === 'update' && tweetable()) {
       if (shortURL) {
         var tweet = message + " " + shortURL;
@@ -1238,7 +1238,7 @@ function initializeExtension() {
     }
   });
 
-  console.log(TweetManager.instance.twitterBackend);
+  //console.log(TweetManager.instance.twitterBackend);
   if(!TweetManager.instance.twitterBackend.authenticated() &&
      !TweetManager.instance.twitterBackend.tokenRequested()) {
     console.log('aaa');
@@ -1267,7 +1267,7 @@ function initializeExtension() {
           TweetManager.instance.getMyInfo();
         }
       } else {
-        if (changeInfo.status === 'loading') {
+        if (changeInfo.status === 'complete') {
           var vurl = checkURL(removeParams(tab.url));
           if (vurl) {
             sendToServer('join', vurl, '');
@@ -1303,6 +1303,9 @@ function initializeExtension() {
       //console.log(myInfo['screen_name']);
       sendResponse(myInfo['screen_name']);
     }
+    else if (request.getLanguage) {
+      sendResponse(localStorage.language_code);
+    }
     // send request
     else if (request.msgType) {
       var vurl = validateURL(request.url);
@@ -1318,6 +1321,97 @@ function initializeExtension() {
         else {
           sendToServer(request.msgType, vurl, request.message);
         }
+      }
+    }
+  });
+
+  // Google Ajax Language API
+  google.load("language", "1");
+  
+  var translateByGoogle = function(src, tabid) {
+    $.each(src, function(key, text) {
+      //console.log(key, text);
+      google.language.detect(text, function(result) {
+        if (!result.error && result.language) {
+          console.log(localStorage.language_code);
+          if (localStorage.language_code) {
+            //console.log(localStorage.language_code);
+            google.language.translate(text, result.language, localStorage.language_code, function(result) {
+
+              if (result.translation) {
+                console.log('bbb');
+                chrome.tabs.sendRequest(tabid,
+                                        { type: 'translated',
+                                          api: 'google',
+                                          uid: key,
+                                          translation: result.translation
+                                        }
+                                       );
+              }
+            });
+          }
+        }
+        
+      });
+    });
+  }
+
+  var translateByBing = function(src, tabid) {
+    var url = 'http://api.microsofttranslator.com/V2/Ajax.svc/';
+    var appId = '3AE7818AA94857DC0270505508515139C9E0D854';
+
+    var index = 0;
+    $.each(src, function(key, text) {
+      window['bingRespond'+index] = function(response) {
+        console.log(response);
+        chrome.tabs.sendRequest(tabid,
+                                { type: 'translated',
+                                  api: 'bing',
+                                  uid: key,
+                                  translation: response
+                                }
+                               );
+      }
+
+      var createTranslateFunc = function(index) {
+        return function (response) {
+          console.log(response);
+          $('body')
+            .append(
+              $('<script>')
+                .attr('src', url+"Translate?oncomplete=bingRespond"+index+"&appId="+appId+"&from="+response+"&to="+localStorage.language_code+"&text="+text));
+        }
+      };
+
+      window['bingTranslate'+index] = createTranslateFunc(index);
+      
+      $('body')
+        .append(
+          $('<script>')
+            .attr('src', url+"Detect?oncomplete=bingTranslate"+index+"&appId="+appId+"&text="+text));
+      
+      index++;
+    });
+  }
+  
+  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    if (request.type === 'translate') {
+      switch(request.api) {
+      case 'google':
+        translateByGoogle(request.src, sender.tab.id);
+        break;
+      case 'bing':
+        translateByBing(request.src, sender.tab.id);
+        break;
+      default:
+        break;
+      }
+    }
+    else if (request.type === 'language') {
+      //console.log(request.code);
+      localStorage.language_code = request.code;
+      if (request.api === 'google') {
+        translateByGoogle(request.src, sender.tab.id);
       }
     }
   });

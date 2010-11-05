@@ -1,0 +1,38 @@
+{
+  "lwe_toolbar_edition_button": {
+    "message": "Choose Translations",
+    "description": ""
+  },
+  "lwe_toolbar_edit_button": {
+    "message": "Translate by yourself",
+    "description": ""
+  },
+  "lwe_toolbar_undo_button": {
+    "message": "Undo",
+    "description": ""
+  },
+  "lwe_toolbar_redo_button": {
+    "message": "Redo",
+    "description": ""
+  },
+  "lwe_toolbar_original_button_original": {
+    "message": "Show Original",
+    "description": ""
+  },
+  "lwe_toolbar_original_button_latest": {
+    "message": "Show Latest",
+    "description": ""
+  },
+  "lwe_toolbar_share_button": {
+    "message": "Collaborate",
+    "description": ""
+  },
+  "lwe_toolbar_clear_button": {
+    "message": "Delete",
+    "description": ""
+  }
+  // "": {
+  //   "message": "",
+  //   "description": ""
+  // }
+}
