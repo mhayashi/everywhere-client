@@ -1,6 +1,6 @@
 {
   "name": "Everywhere!",
-  "version": "0.1.4",
+  "version": "0.5.0",
   "description": "Translate/Share/Chat Everywhere!",
   "default_locale": "en",
   "browser_action": {
@@ -43,7 +43,6 @@
         "lib/3rdparty/jquery.autogrow.js",
         "lib/3rdparty/jquery.jeditable.ajaxupload.js",
         "lib/3rdparty/jquery.ajaxfileupload.js",
-        "lib/3rdparty/jsdeferred.js",
         "lib/lwe.js",
         "lib/utils.js",
         "lib/3rdparty/jquery.qtip.min.js",
