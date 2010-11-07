@@ -43,6 +43,8 @@
         "lib/3rdparty/jquery.autogrow.js",
         "lib/3rdparty/jquery.jeditable.ajaxupload.js",
         "lib/3rdparty/jquery.ajaxfileupload.js",
+        "lib/3rdparty/jquery.diff.js",
+        "lib/3rdparty/xml2json.js",
         "lib/lwe.js",
         "lib/utils.js",
         "lib/3rdparty/jquery.qtip.min.js",
