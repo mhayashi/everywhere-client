@@ -1271,6 +1271,7 @@ function initializeExtension() {
           var vurl = checkURL(removeParams(tab.url));
           if (vurl) {
             sendToServer('join', vurl, '');
+            urls[tabId] = vurl;
           }
         }
       }
@@ -1289,8 +1290,8 @@ function initializeExtension() {
       // TODO: enable to pass callback
       connectToServer();
     } else {
-      var tab = chrome.tabs.get(tabId);
-      sendToServer('exit', validateURL(tab.url), 'bye');
+      sendToServer('exit', validateURL(urls[tabId]), 'bye');
+      delete urls[tabId];
       // test code
       //var username = TweetManager.instance.twitterBackend.username();
       //message({'message':{msgType:'exit', url:visitingPages[tabId], username: username, message:"bye!",}});
