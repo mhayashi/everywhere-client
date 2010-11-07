@@ -161,7 +161,7 @@ div[id^="ui-tooltip-everywhere-user-"] {
 .everywhere-qtip-log {
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    height: 300px !important;
+    height: 250px !important;
 }
 
 .everywhere-qtip-message {
