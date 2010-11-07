@@ -1,22 +1,22 @@
 {
   "lwe_toolbar_edition_button": {
-    "message": "Choose Translations",
+    "message": "翻訳を選ぶ",
     "description": ""
   },
   "lwe_toolbar_edit_button": {
-    "message": "Translate by yourself",
+    "message": "自分で翻訳",
     "description": ""
   },
   "lwe_toolbar_edit_button_end": {
-    "message": "End Translation",
+    "message": "翻訳を終了",
     "description": ""
   },
   "lwe_toolbar_edit_dialog_title": {
-    "message": "Start translation",
+    "message": "翻訳を開始します",
     "description": ""
   },
   "lwe_toolbar_edit_dialog_text": {
-    "message": "Do you copy this translation and make yours?",
+    "message": "この翻訳をコピーして自分の翻訳を作成しますか?",
     "description": ""
   },
   "lwe_toolbar_undo_button": {
@@ -28,31 +28,31 @@
     "description": ""
   },
   "lwe_toolbar_original_button_original": {
-    "message": "Show Original",
+    "message": "原文を表示",
     "description": ""
   },
   "lwe_toolbar_original_button_latest": {
-    "message": "Show Latest",
+    "message": "翻訳を表示",
     "description": ""
   },
   "lwe_toolbar_share_button": {
-    "message": "Collaborate",
+    "message": "共同作業",
     "description": ""
   },
   "lwe_toolbar_clear_button": {
-    "message": "Delete",
+    "message": "削除",
     "description": ""
   },
   "lwe_toolbar_delete_dialog_title": {
-    "message": "Delete this translation from server",
+    "message": "この翻訳をサーバから削除します",
     "description": ""
   },
   "lwe_toolbar_delete_dialog_text": {
-    "message": "Are you sure?",
+    "message": "よろしいですか？",
     "description": ""
   },
   "lwe_share_dialog_text": {
-    "message": "Choose collaborators",
+    "message": "共同作業する人を選択します",
     "description": ""
   }
 }
