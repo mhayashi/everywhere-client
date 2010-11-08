@@ -1,6 +1,6 @@
 {
   "name": "Everywhere!",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "Translate/Share/Chat Everywhere!",
   "default_locale": "en",
   "browser_action": {
