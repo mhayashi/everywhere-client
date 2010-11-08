@@ -109,7 +109,8 @@ textarea {
     display: table !important;
     z-index: 1000000 !important;
     background: rgba(0, 0, 0, 0.8) !important;
-    top: 100px !important;
+    top: 200px !important;
+    position: absolute !important;
     width: 500px !important;
     min-height: 100px !important;
     max-height: 300px !important;
