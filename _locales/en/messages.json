@@ -27,6 +27,10 @@
     "message": "Redo",
     "description": ""
   },
+  "lwe_tip_title": {
+    "message": "Original:",
+    "description": ""
+  },
   "lwe_toolbar_original_button_original": {
     "message": "Show Original",
     "description": ""

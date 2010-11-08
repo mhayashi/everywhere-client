@@ -27,6 +27,10 @@
     "message": "Redo",
     "description": ""
   },
+  "lwe_tip_title": {
+    "message": "原文:",
+    "description": ""
+  },
   "lwe_toolbar_original_button_original": {
     "message": "原文を表示",
     "description": ""
